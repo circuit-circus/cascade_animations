@@ -3,7 +3,7 @@ class CompoundCurve {
   float duration;
   int iterator = 0;
   boolean hasEnded = false;
-  float t;   //<>//
+  float t;  
   
   CompoundCurve() {
     myCurves = new ArrayList();

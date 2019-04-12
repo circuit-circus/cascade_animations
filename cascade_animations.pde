@@ -8,7 +8,7 @@ ArrayList<Circle> circles;
 void setup() {
   size(800, 800);
   
-  try { // Try to establish connection to the GazeDisplay
+  try { // Try to establish connection to the Teensy
     mySerialInterface = new SerialInterface(this);
   } 
   catch (Exception e) {
@@ -17,7 +17,7 @@ void setup() {
   }
   
   circles = new ArrayList();
-  circles.add(new Circle(width/2, height/2, 15, 20, mySerialInterface, 1));
+  circles.add(new Circle(width/2, height/2, 17, 4, mySerialInterface, 1)); //It is very important that the total number of LEDs correspond to the number of LEDs registered on the Teensy
   //circles.add(new Circle(width/2, height/2, 15, 20, mySerialInterface, 1));
 
   circles.get(0).addAnimation(new WindAnimation(), 0);
@@ -32,6 +32,7 @@ void draw() {
     circle.update();
     circle.display();
   }
+  //mySerialInterface.update();
 }
 
 void serialEvent(Serial myPort) {
