@@ -1,0 +1,11 @@
+class CombinedWeatherAnimation extends Animation {
+  
+  CombinedWeatherAnimation(){
+  ;  
+  }
+  
+  void animate(){
+    ;
+  }
+
+}

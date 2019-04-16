@@ -3,10 +3,11 @@ class Display {
   This class should generalize the concept of have physical and virtual pixels and attaching animations to them. 
    It should maybe be abstract
    */
-  
+  int totalLeds = 0;
   int myID;
-  int virtualDensity = 16; //Default resolution
+  int virtualDensity = 5; //Default resolution
   boolean showLeds = true;
+  boolean showPixels = false;
 
   Display() {
   }
