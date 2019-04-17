@@ -7,7 +7,7 @@ class WindAnimation extends Animation {
   CompoundCurve movement; 
   CompoundCurve brightness;
   int windStartIndex = 0;
-  int windLength = 50; //This can cause the program to hang if its longer than the pixelList size
+  int windLength = 5; //This can cause the program to hang if its longer than the pixelList size
   float movementBaseSpeed = 2; 
 
   WindAnimation() {

@@ -1,7 +1,7 @@
-class SerialInterface {  //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class SerialInterface {  //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
   Serial myPort;    
-  boolean serialActive = false;                    // Use this to turn off the Serial when running this without a microcontroller connected.
+  boolean serialActive = true;                    // Use this to turn off the Serial when running this without a microcontroller connected.
   ArrayList<Display> myDisplays; 
   boolean firstContact = false;                    // Whether we've heard from the microcontroller
   int serialCount = 0;                             // A count of how many bytes we receive
@@ -38,6 +38,7 @@ class SerialInterface {  //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
       byte[] sensorIn = new byte[4];
       myPort.readBytes(sensorIn);
       touchArray = int(sensorIn);
+      println(touchArray[0] + " " + touchArray[1] + " " + touchArray[2] + " " + touchArray[3]);
     }
   }
 
