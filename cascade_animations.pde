@@ -27,12 +27,12 @@ void setup() {
   //circles.add(new Circle(width/4*3, height/4*2, 100, 30, 10, mySerialInterface, 5));
 
 
-  circles.get(0).addAnimation(new DebugAnimation(), 0);
-  circles.get(0).addAnimation(new DebugAnimation(), 1);
-  //circles.get(0).addAnimation(new RainAnimation(), 0);
-  //circles.get(0).addAnimation(new RainAnimation(), 1);
-  //circles.get(0).addAnimation(new WindAnimation(), 0);
-  //circles.get(0).addAnimation(new WindAnimation(), 1);
+  //circles.get(0).addAnimation(new DebugAnimation(), 0);
+  //circles.get(0).addAnimation(new DebugAnimation(), 1);
+  circles.get(0).addAnimation(new RainAnimation(), 0);
+  circles.get(0).addAnimation(new RainAnimation(), 1);
+  circles.get(0).addAnimation(new WindAnimation(), 0);
+  circles.get(0).addAnimation(new WindAnimation(), 1);
   //circles.get(1).addAnimation(new RainAnimation(), 0);
   //circles.get(1).addAnimation(new RainAnimation(), 1);
   //circles.get(2).addAnimation(new WindAnimation(), 0);

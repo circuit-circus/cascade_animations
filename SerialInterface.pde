@@ -1,4 +1,4 @@
-class SerialInterface {   //<>// //<>// //<>// //<>// //<>//
+class SerialInterface {   //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
   Serial myPort;    
   boolean serialActive = true;                    // Use this to turn off the Serial when running this without a microcontroller connected.
@@ -10,7 +10,7 @@ class SerialInterface {   //<>// //<>// //<>// //<>// //<>//
   int[] touchArray = new int[expectedBytes];       //Holds the touch data coming from the Teensy 
   int longestStrip = 84; 
   int bufferChar = int('#');                       // Character that triggers SerialEvent 
-  
+
   SerialInterface(PApplet pApp) {
     myDisplays = new ArrayList();
 
@@ -18,7 +18,7 @@ class SerialInterface {   //<>// //<>// //<>// //<>// //<>//
       String portName = Serial.list()[0];
       myPort = new Serial(pApp, portName);
       println("Serial Port: " + portName);
-      myPort.bufferUntil(bufferChar); 
+      myPort.bufferUntil(bufferChar);
     }
   }
 
@@ -36,49 +36,49 @@ class SerialInterface {   //<>// //<>// //<>// //<>// //<>//
     //if (inByte == '#' || inByte == '&') {
     //  //send();
     //} else if (inByte == '!') {
-      byte[] sensorIn = new byte[4];
-      myPort.readBytes(sensorIn);
-      touchArray = int(sensorIn);
-      println(touchArray[0] + " " + touchArray[1] + " " + touchArray[2] + " " + touchArray[3]);
-      myPort.clear();
+    byte[] sensorIn = new byte[4];
+    myPort.readBytes(sensorIn);
+    touchArray = int(sensorIn);
+    //println(touchArray[0] + " " + touchArray[1] + " " + touchArray[2] + " " + touchArray[3]);
+    myPort.clear();
     //}
   }
-  
-  void update(){
-  send();
+
+  void update() {
+    if (serialActive) {
+      send();
+    }
   }
 
   void send() {
+    int offset = 0;
+    int pixel[] = new int[8];
+    int mask; 
     int dataToSend = longestStrip * 3 * 8;
     byte[] sendData = new byte[dataToSend]; 
-    //Wrapping the data to fit the OctoWS2811 expectation of a XY grid. 
-    for (int y = 0; y < 8; y++) { 
-      color[] displayData;
-      if ( y >= myDisplays.size()){
-        displayData = new color[1];
-      } else {
-      println("Sending data for display ID: " + myDisplays.get(y).getID() + " Number of LEDs: " + myDisplays.get(y).getLedData().length);
-      displayData = myDisplays.get(y).getLedData();
-      }
-      for (int x = 0; x < longestStrip; x++){ 
-        int rgb;
-        if (x >= displayData.length){
-        rgb = 0;  
+    //Wrapping the data to fit the OctoWS2811 expectation of a YX grid, where Y is the pins and X is the strip length. 
+    //Always generate enough data for all of the pins. 
+    for (int x = 0; x < longestStrip; x++) {
+      for (int y = 0; y < 8; y++) { 
+        if ( y >= myDisplays.size() || x >= myDisplays.get(y).getLedData().length) {
+          pixel[y] = color(0, 0, 0);
         } else {
-        rgb = displayData[x];
+          //println("Sending data for display ID: " + myDisplays.get(y).getID() + " Number of LEDs: " + myDisplays.get(y).getLedData().length);
+          pixel[y] = myDisplays.get(y).getLedData()[x];
         }
-        int r = rgb >> 16 & 0xFF;   //Getting red data
-        int g = rgb >> 8 & 0xFF;    //Getting green data
-        int b = rgb & 0xFF;         //Getting blue data
-        
-        //Pack the data in GRB order to accomodate for the Neopixel wiring
-        sendData[x * 3 + y * longestStrip] = byte(g); 
-        sendData[x * 3 + y * longestStrip + 1] = byte(r); 
-        sendData[x * 3 + y * longestStrip + 2] = byte(b); 
+      }
+      
+      // convert 8 pixels to 24 bytes. Copied from Paul Stoffregens Movie2Serial example
+      for (mask = 0x800000; mask != 0; mask >>= 1) {
+        byte b = 0;
+        for (int i=0; i < 8; i++) {
+          if ((pixel[i] & mask) != 0) b |= (1 << i);
+        }
+        sendData[offset++] = b;
       }
     }
     myPort.write('!');
     myPort.write(sendData);
-    //println(sendData.length);
+    //println(sendData);
   }
 }
