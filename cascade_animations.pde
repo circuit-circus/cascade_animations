@@ -29,10 +29,10 @@ void setup() {
 
   //circles.get(0).addAnimation(new DebugAnimation(), 0);
   //circles.get(0).addAnimation(new DebugAnimation(), 1);
+  circles.get(0).addAnimation(new HeatAnimation(), 0);
+  circles.get(0).addAnimation(new HeatAnimation(), 1);
   circles.get(0).addAnimation(new RainAnimation(), 0);
   circles.get(0).addAnimation(new RainAnimation(), 1);
-  circles.get(0).addAnimation(new WindAnimation(), 0);
-  circles.get(0).addAnimation(new WindAnimation(), 1);
   //circles.get(1).addAnimation(new RainAnimation(), 0);
   //circles.get(1).addAnimation(new RainAnimation(), 1);
   //circles.get(2).addAnimation(new WindAnimation(), 0);
