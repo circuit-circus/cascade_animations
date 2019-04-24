@@ -1,4 +1,4 @@
-class SerialInterface {   //<>//
+class SerialInterface {   //<>// //<>// //<>//
 
   Serial myPort;    
   boolean serialActive = true;                     // Use this to turn off the Serial when running this without a microcontroller connected.
@@ -7,7 +7,7 @@ class SerialInterface {   //<>//
   int serialCount = 0;                             // A count of how many bytes we receive
   int expectedBytes = 4;                           // The number of bytes of serial data we expect from the Teensy
   int[] serialInArray = new int[expectedBytes];    // Where we'll put what we receive
-  int[] touchArray = new int[expectedBytes];       // Holds the touch data coming from the Teensy 
+  int[] sensorData = new int[expectedBytes];       // Holds the touch data coming from the Teensy 
   int longestStrip = 84;                           // Because of the way the OctoWS2811 library works. Everything needs to be scaled to the longest strip length * 8 (the number of pins on the OctoWS2811 board). 
   int bufferChar = int('#');                       // Character that triggers SerialEvent 
 
@@ -33,16 +33,16 @@ class SerialInterface {   //<>//
     myDisplays.add(d);
   }
 
-  int[] getTouch() {
-    return touchArray;
+  int[] getSensorData() {
+    return sensorData;
   }
 
   //Stores the sensor values received via serial
   void serialEvent() {
     byte[] sensorIn = new byte[expectedBytes]; // The length of the array should correspond to the amount of sensors
     myPort.readBytes(sensorIn);
-    touchArray = int(sensorIn);
-    //println(touchArray[0] + " " + touchArray[1] + " " + touchArray[2] + " " + touchArray[3]);
+    sensorData = int(sensorIn);
+    //println(sensorData[0] + " " + sensorData[1] + " " + sensorData[2] + " " + sensorData[3]);
     myPort.clear();
   }
 

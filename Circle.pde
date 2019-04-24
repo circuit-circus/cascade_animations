@@ -6,13 +6,7 @@ class Circle extends Display {
   float radius, innerRadius, outerRadius;
   int ledDiameter = 5;
 
-  ArrayList<Animation> myAnimations;
-
-  SerialInterface mySerialInterface;
-
-  int myID;
-
-  Circle(float x_, float y_, float r, int numOuterLeds_, int numInnerLeds_, SerialInterface si, int id) {
+  Circle(float x_, float y_, float r, int numOuterLeds_, int numInnerLeds_, SerialInterface si) {
 
     radius = r;
     innerRadius = radius * 0.3;
@@ -27,13 +21,32 @@ class Circle extends Display {
     outerLeds = new color[numOuterLeds];
     totalLeds = numInnerLeds + numOuterLeds; 
 
-    myID = id;
-
     x = x_;
     y = y_;
 
     mySerialInterface = si;
     si.registerDisplay(this);
+
+    myAnimations = new ArrayList();
+  }
+
+  Circle(float x_, float y_, float r, int numOuterLeds_, int numInnerLeds_) {
+
+    radius = r;
+    innerRadius = radius * 0.3;
+    outerRadius = radius * 0.9;
+    numInnerLeds = numInnerLeds_;
+    numOuterLeds = numOuterLeds_;
+    numInnerPixels = numInnerLeds * virtualDensity;
+    numOuterPixels = numOuterLeds * virtualDensity;
+    innerPixels = new color[numInnerPixels];
+    outerPixels = new color[numOuterPixels];
+    innerLeds = new color[numInnerLeds];
+    outerLeds = new color[numOuterLeds];
+    totalLeds = numInnerLeds + numOuterLeds; 
+
+    x = x_;
+    y = y_;
 
     myAnimations = new ArrayList();
   }
@@ -54,7 +67,7 @@ class Circle extends Display {
       }
 
       for (int i = 0; i < numOuterPixels; i++) {
-        float vAngle = (TWO_PI / numOuterPixels) * i  + (TWO_PI/4);;
+        float vAngle = (TWO_PI / numOuterPixels) * i  + (TWO_PI/4);
         fill(outerPixels[i]);
         ellipse(cos(vAngle) * outerRadius, sin(vAngle) * outerRadius, ledDiameter, ledDiameter);
       }
@@ -64,13 +77,15 @@ class Circle extends Display {
     if (showLeds) {
       stroke(0);
       //Drawing physical LEDs
-      for (int i = 0; i < numOuterLeds; i++) {
-        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4);;
+      for (int i = 0; i < numOuterLeds; i++) { //<>//
+        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4); //<>//
+        ;
         fill(outerLeds[i]);
         ellipse(cos(pAngle) * outerRadius, sin(pAngle) * outerRadius, ledDiameter, ledDiameter);
       }
       for (int i = 0; i < numInnerLeds; i++) {
-        float pAngle = (TWO_PI / numInnerLeds) * i  + (TWO_PI/4);;
+        float pAngle = (TWO_PI / numInnerLeds) * i  + (TWO_PI/4);
+        ;
         fill(innerLeds[i]);
         ellipse(cos(pAngle) * innerRadius, sin(pAngle) * innerRadius, ledDiameter, ledDiameter);
       }
@@ -83,18 +98,18 @@ class Circle extends Display {
   void update() {
     for (Animation animation : myAnimations) {
       animation.animate();
-    }
+    } 
     outerLeds = downsample(outerPixels, numOuterLeds, true);
     innerLeds = downsample(innerPixels, numInnerLeds, true);
-  }
+  } 
 
-  void addAnimation(Animation ani, int i) {
+  void addAnimation(Animation ani, int location) {
     myAnimations.add(ani);
     //ani.addPixels(innerLeds);
 
-    if (i == 0) {
+    if (location == 0) {
       ani.addPixels(outerPixels);
-    } else if (i == 1) {
+    } else if (location == 1) {
       ani.addPixels(innerPixels);
     }
   }
