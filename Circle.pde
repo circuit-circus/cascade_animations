@@ -1,10 +1,11 @@
 class Circle extends Display {
 
   int numInnerLeds, numOuterLeds, numInnerPixels, numOuterPixels;
-  color[]  innerLeds, outerLeds, innerPixels, outerPixels; 
+  color[] innerLeds, outerLeds, innerPixels, outerPixels, pos0Pixels, pos1Pixels; 
   float x, y;
   float radius, innerRadius, outerRadius;
   int ledDiameter = 5;
+  String[] locationModes = {"inOut", "split", "mix", "time"}; 
 
   Circle(float x_, float y_, float r, int numOuterLeds_, int numInnerLeds_, SerialInterface si) {
 
@@ -77,8 +78,8 @@ class Circle extends Display {
     if (showLeds) {
       stroke(0);
       //Drawing physical LEDs
-      for (int i = 0; i < numOuterLeds; i++) { //<>//
-        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4); //<>//
+      for (int i = 0; i < numOuterLeds; i++) { //<>// //<>// //<>//
+        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4); //<>// //<>// //<>// //<>// //<>// //<>//
         ;
         fill(outerLeds[i]);
         ellipse(cos(pAngle) * outerRadius, sin(pAngle) * outerRadius, ledDiameter, ledDiameter);
@@ -93,7 +94,7 @@ class Circle extends Display {
     popMatrix();
 
     clearPixels();
-  } //<>// //<>//
+  } 
 
   void update() {
     for (Animation animation : myAnimations) {
@@ -105,12 +106,24 @@ class Circle extends Display {
 
   void addAnimation(Animation ani, int location) {
     myAnimations.add(ani);
-    //ani.addPixels(innerLeds);
-
+    //ani.setPixels(innerLeds);
     if (location == 0) {
-      ani.addPixels(outerPixels);
+      ani.setPixels(outerPixels);
     } else if (location == 1) {
-      ani.addPixels(innerPixels);
+      ani.setPixels(innerPixels);
+    }
+  }
+
+  void addAnimation(String animationClassName, int location) {
+    Animation ani = animationCreator.create(animationClassName);  //<>//
+    if (ani == null) { 
+      return;
+    }  //<>//
+    myAnimations.add(ani);  //<>//
+    if (location == 0) { 
+      ani.setPixels(outerPixels);
+    } else if (location == 1) {
+      ani.setPixels(innerPixels);
     }
   }
 
@@ -127,5 +140,26 @@ class Circle extends Display {
   color[] getLedData() {
     color[] ledData = concat(outerLeds, innerLeds);
     return ledData;
+  }
+  
+  void setLocationMode(int index){
+    setLocationMode(locationModes[index]);
+    
+  }
+  void setLocationMode(String locationMode){
+    
+    switch (locationMode){
+      case "inOut" : ;
+      break;
+      case "split" : ;
+      break;
+      case "mix" : ;
+      break;
+      case "time": ;
+      break;
+      default : println("No such location mode: " + locationMode);
+    
+    }
+    
   }
 }

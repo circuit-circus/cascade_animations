@@ -3,6 +3,7 @@ class HeatAnimation extends Animation {
   float noiseX = 0;
 
   HeatAnimation() {
+    AnimationType = "HeatAnimation";
   }
 
   void animate() { 

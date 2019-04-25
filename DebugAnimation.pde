@@ -4,6 +4,7 @@ class DebugAnimation extends Animation {
     int hue = 0;
 
   DebugAnimation() {
+    AnimationType = "DebugAnimation";
   }
 
   void animate() {

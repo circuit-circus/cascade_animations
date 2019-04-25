@@ -1,11 +1,13 @@
 class RainAnimation extends Animation {
 
   /*
-  A specific animation to evoke the connotations of rain
+    A specific animation to evoke the connotations of rain
    */
+ 
   ArrayList<Drop> myDrops = new ArrayList();
   int numDrops = 400; 
   RainAnimation() {
+    AnimationType = "RainAnimation";
   }
 
   void animate() {

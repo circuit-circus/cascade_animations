@@ -40,17 +40,25 @@ class Display {
   
   void addAnimation(){}
   
+  void addAnimation(Class animationClass){
+    try{
+    myAnimations.add((Animation) animationClass.newInstance());
+    } catch(Exception e){
+    println(e);
+    }
+  }
+  
   void removeAnimation(int index){
     if (index < myAnimations.size() && index >= 0){
     myAnimations.remove(index);
     }
   }
   
-  Animation copyAnimation(int index){
-    return myAnimations.get(index);
+  void removeAnimations(){
+    myAnimations.clear();
   }
   
-  Animation copyAnimation(){
-    return copyAnimation(0);
+  String getAnimationType(int index){
+    return myAnimations.get(index).getType();
   }
 }

@@ -2,6 +2,7 @@
 import processing.serial.*;
 SerialInterface mySerialInterface;
 DataPusher myDataPusher; 
+AnimationCreator animationCreator;
 
 boolean displayAnimations = true;
 
@@ -17,6 +18,7 @@ void setup() {
     println("Could not start serial connection");
   }
   
+  animationCreator = new AnimationCreator();
   myDataPusher = new DataPusher(mySerialInterface);
 }
 

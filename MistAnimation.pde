@@ -3,6 +3,7 @@ class MistAnimation extends Animation {
   float noiseX = 0;
 
   MistAnimation() {
+    AnimationType = "MistAnimation";
   }
 
   void animate() {
