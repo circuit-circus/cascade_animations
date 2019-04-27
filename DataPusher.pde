@@ -18,17 +18,17 @@ class DataPusher{
     result = new Circle(width/4*2.5, height/4*3, 200, 67, 17, mySerialInterface);
     preview = new Circle(width/4*1, height/4*1, 100, 67, 17);
     analysis = new Circle(width/4*3, height/4*1, 70, 67, 17);
-     //<>//
-    allAnimations = new ArrayList(); //<>// //<>// //<>// //<>//
-    allAnimations.add("HeatAnimation"); //<>// //<>// //<>// //<>//
-    allAnimations.add("MistAnimation"); //<>// //<>//
-    allAnimations.add("RainAnimation"); //<>//
+ //<>//
+    allAnimations = new ArrayList();  //<>//
+    allAnimations.add("HeatAnimation");  //<>//
+    allAnimations.add("MistAnimation");  //<>//
+    allAnimations.add("RainAnimation");  //<>//
     allAnimations.add("WindAnimation");
-     //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 0); //<>// //<>// //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 1); //<>//
-    result.addAnimation(new DebugAnimation(),0); //<>//
-    result.addAnimation(new DebugAnimation(),1);
+ //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);  //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);  //<>//
+    result.addAnimation(new HeatAnimation(),0);  //<>//
+    result.addAnimation(new HeatAnimation(),1);
     analysis.addAnimation(new RedAnimation(),0);
     analysis.addAnimation(new BlueAnimation(),1);
   }

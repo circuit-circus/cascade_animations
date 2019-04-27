@@ -1,11 +1,14 @@
 class Circle extends Display {
 
   int numInnerLeds, numOuterLeds, numInnerPixels, numOuterPixels;
-  color[] innerLeds, outerLeds, innerPixels, outerPixels, pos0Pixels, pos1Pixels; 
+  color[] innerLeds, outerLeds, innerPixels, outerPixels; 
+  int[][][] areaMaps;
+  int numAreas = 2; 
   float x, y;
   float radius, innerRadius, outerRadius;
   int ledDiameter = 5;
-  String[] locationModes = {"inOut", "split", "mix", "time"}; 
+  String[] areaModes = {"inOut", "split", "mix", "time"}; 
+  int[] currentAreaMap;
 
   Circle(float x_, float y_, float r, int numOuterLeds_, int numInnerLeds_, SerialInterface si) {
 
@@ -75,9 +78,9 @@ class Circle extends Display {
     }
 
 
-    if (showLeds) {
-      stroke(0);
-      //Drawing physical LEDs
+    if (showLeds) { //<>// //<>// //<>// //<>//
+      stroke(0); //<>// //<>// //<>// //<>// //<>//
+      //Drawing physical LEDs //<>//
       for (int i = 0; i < numOuterLeds; i++) { //<>// //<>// //<>//
         float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4); //<>// //<>// //<>// //<>// //<>// //<>//
         ;
@@ -105,21 +108,23 @@ class Circle extends Display {
   } 
 
   void addAnimation(Animation ani, int location) {
+    //The Animation should accept a set of all pixels in the display, plus a map. 
+    
     myAnimations.add(ani);
     //ani.setPixels(innerLeds);
     if (location == 0) {
       ani.setPixels(outerPixels);
     } else if (location == 1) {
-      ani.setPixels(innerPixels);
+      ani.setPixels(innerPixels); //<>//
     }
-  }
-
-  void addAnimation(String animationClassName, int location) {
-    Animation ani = animationCreator.create(animationClassName);  //<>//
-    if (ani == null) { 
-      return;
-    }  //<>//
-    myAnimations.add(ani);  //<>//
+  } 
+   //<>//
+  void addAnimation(String animationClassName, int location) { //<>//
+    Animation ani = animationCreator.create(animationClassName);   //<>//
+    if (ani == null) {  //<>//
+      return; 
+    }  
+    myAnimations.add(ani);  
     if (location == 0) { 
       ani.setPixels(outerPixels);
     } else if (location == 1) {
@@ -142,13 +147,12 @@ class Circle extends Display {
     return ledData;
   }
   
-  void setLocationMode(int index){
-    setLocationMode(locationModes[index]);
-    
+  void setAreaMode(int index){
+    setAreaMode(areaModes[index]);
   }
-  void setLocationMode(String locationMode){
+  void setAreaMode(String areaMode){
     
-    switch (locationMode){
+    switch (areaMode){
       case "inOut" : ;
       break;
       case "split" : ;
@@ -157,9 +161,53 @@ class Circle extends Display {
       break;
       case "time": ;
       break;
-      default : println("No such location mode: " + locationMode);
+      default : println("No such location mode: " + areaMode);
     
     }
     
   }
+  
+  void generateAreaMaps(){
+    int offset = 0; //Used to offset to the right location on the physical LED string
+    
+    //Generate outer part of InOut mode
+    int[] inOutOutMap = new int[outerPixels.length];
+    for (int i = 0; i < outerPixels.length; i++){
+      inOutOutMap[i] = i;
+    } 
+    areaMaps[0][0] = inOutOutMap;
+    
+    //Generate inner part of InOut mode
+    int[] inOutInMap = new int[innerPixels.length];
+    offset = outerPixels.length;
+    for (int i = 0; i < innerPixels.length; i++){
+      inOutInMap[offset+i] = i;
+    } 
+    areaMaps[0][1] = inOutInMap;
+    
+    //Generate lower part of split mode
+    int[] splitDownMap = new int[outerPixels.length/2 + innerPixels.length/2];
+    for (int i = 0; i < outerPixels.length/2; i++){
+      splitDownMap[i] = i;
+    } 
+    offset = outerPixels.length;
+    for (int i = 0; i < innerPixels.length/2; i++){
+      splitDownMap[offset+i] = i;
+    }
+    areaMaps[1][0] = splitDownMap;
+    
+    //Generate upper part of split mode 
+    int[] splitUpMap = new int[outerPixels.length/2 + innerPixels.length/2];
+    offset = 0;
+    for (int i = outerPixels.length/2; i < outerPixels.length; i++){
+      splitUpMap[i] = i;
+      offset++;
+    } 
+    for (int i = innerPixels.length/2; i < innerPixels.length; i++){
+      splitUpMap[offset+i] = i;
+    }
+    areaMaps[1][1] = splitUpMap;
+  }
+  
+ 
 }
