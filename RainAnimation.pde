@@ -12,7 +12,7 @@ class RainAnimation extends Animation {
 
   void animate() {
     if (myDrops.size() < numDrops) {
-      myDrops.add(new Drop(round(random(0, pixelList.length-1))));
+      myDrops.add(new Drop(round(random(0, map.length-1))));
     }
 
     for (int i = 0; i < myDrops.size(); i++) {
@@ -36,7 +36,7 @@ class RainAnimation extends Animation {
 
     void update() {
       colorMode(HSB);
-      pixelList[index] = color(150, 200, fade.animate()*255);
+      pixelList[map[index]] = color(150, 200, fade.animate()*255);
     }
 
     boolean hasEnded() {

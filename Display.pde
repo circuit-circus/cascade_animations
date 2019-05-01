@@ -1,4 +1,4 @@
-class Display {
+abstract class Display {
   /*
   This class should generalize the concept of have physical and virtual pixels and attaching animations to them. 
    It should maybe be abstract
@@ -15,7 +15,7 @@ class Display {
 
   Display() {
   }
-
+  
   color[] getLedData() {
     color[] ledData = new color[1];
     return ledData;
@@ -25,13 +25,12 @@ class Display {
     return myID;
   }
 
-  color[] downsample(color[] inArray, int numOutLeds, boolean isCircular) {
-    color[] outArray = new color[numOutLeds];
+  color[] downsample(color[] inArray, int[] map, boolean isCircular) {
+    color[] outArray = new color[map.length / virtualDensity];
     int j = 0;
-    for (int i = 0; i < inArray.length; i++) {
+    for (int i = 0; i < map.length; i++) {
       if (1 == i % virtualDensity ) { //Make some more sophisticated downsampling code here
-        outArray[j] = inArray[i];
-        //println(j + " " + hex(outArray[j]));
+        outArray[j] = inArray[map[i]];
         j++;
       }
     }
@@ -39,15 +38,7 @@ class Display {
   }
   
   void addAnimation(){}
-  
-  void addAnimation(Class animationClass){
-    try{
-    myAnimations.add((Animation) animationClass.newInstance());
-    } catch(Exception e){
-    println(e);
-    }
-  }
-  
+   
   void removeAnimation(int index){
     if (index < myAnimations.size() && index >= 0){
     myAnimations.remove(index);

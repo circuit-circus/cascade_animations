@@ -9,7 +9,7 @@ class DebugAnimation extends Animation {
 
   void animate() {
     colorMode(HSB); 
-    for (int i = 0; i < pixelList.length; i++) {
+    for (int i = 0; i < map.length; i++) {
       float noiseVal = 0; 
       if (i > pixelList.length/2) {
         noiseVal = noise(noiseX+i/10)*200;

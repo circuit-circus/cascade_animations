@@ -9,8 +9,8 @@ class BlueAnimation extends Animation {
   
   void animate(){
     colorMode(RGB);
-        for (int i = 0; i < pixelList.length; i++) {
-      pixelList[i] = color(50,50,150);
+        for (int i = 0; i < map.length; i++) {
+      pixelList[map[i]] = color(50,50,150);
     }
   }
 }

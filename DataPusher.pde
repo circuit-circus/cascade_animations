@@ -18,16 +18,16 @@ class DataPusher{
     result = new Circle(width/4*2.5, height/4*3, 200, 67, 17, mySerialInterface);
     preview = new Circle(width/4*1, height/4*1, 100, 67, 17);
     analysis = new Circle(width/4*3, height/4*1, 70, 67, 17);
- //<>//
-    allAnimations = new ArrayList();  //<>//
-    allAnimations.add("HeatAnimation");  //<>//
-    allAnimations.add("MistAnimation");  //<>//
-    allAnimations.add("RainAnimation");  //<>//
+ //<>// //<>//
+    allAnimations = new ArrayList();  //<>// //<>//
+    allAnimations.add("HeatAnimation");  //<>// //<>//
+    allAnimations.add("MistAnimation");  //<>// //<>//
+    allAnimations.add("RainAnimation");  //<>// //<>//
     allAnimations.add("WindAnimation");
- //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);  //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);  //<>//
-    result.addAnimation(new HeatAnimation(),0);  //<>//
+ //<>// //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);  //<>// //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);  //<>// //<>//
+    result.addAnimation(new HeatAnimation(),0);  //<>// //<>//
     result.addAnimation(new HeatAnimation(),1);
     analysis.addAnimation(new RedAnimation(),0);
     analysis.addAnimation(new BlueAnimation(),1);
@@ -106,6 +106,8 @@ class DataPusher{
   
   void submitAnalysis(){
     println("Submit analysis");
+    result.setAreaMode(analysisIndex);
+    
   }
   
   void changeAnalysis(boolean forward){
@@ -114,7 +116,13 @@ class DataPusher{
     } else {
       analysisIndex--; 
     }
-     println("Change analysis");
+    if (analysisIndex > analysis.getNumberOfMaps()-1){
+      analysisIndex = 0;
+    } else if (analysisIndex < 0) {
+      analysisIndex = analysis.getNumberOfMaps()-1;
+    }
+    analysis.setAreaMode(analysisIndex);
+    println("Changing analysis to: " + analysisIndex );
   }
   
 }

@@ -19,23 +19,23 @@ class WindAnimation extends Animation {
 
   void animate() {
     for (int i = 0; i < windLength ; i++) { 
-      if (i > pixelList.length-1) { 
-        i = i - pixelList.length; 
+      if (i > map.length-1) { 
+        i = i - map.length; 
       }
       
       int indexToWrite =  windStartIndex - i;
       if (indexToWrite < 0){ 
-      indexToWrite += pixelList.length;
-      } else if (indexToWrite >= pixelList.length) {
+      indexToWrite += map.length;
+      } else if (indexToWrite >= map.length) {
       indexToWrite = 0;
       }
       colorMode(RGB);
-      pixelList[indexToWrite] = color(255 - ((255 / windLength) * i), 255 - ((255 / windLength) * i), 255 - ((255 / windLength) * i));
+      pixelList[map[indexToWrite]] = color(255 - ((255 / windLength) * i), 255 - ((255 / windLength) * i), 255 - ((255 / windLength) * i));
     }
     windStartIndex += round(movementBaseSpeed * movement.animate());
     //println(movement.animate() + " " + windStartIndex);
-    if (windStartIndex > pixelList.length) {
-      windStartIndex = windStartIndex - pixelList.length-1;
+    if (windStartIndex > map.length) {
+      windStartIndex = windStartIndex - map.length-1;
     }
   }
 }
