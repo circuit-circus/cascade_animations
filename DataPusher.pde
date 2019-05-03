@@ -1,39 +1,41 @@
-class DataPusher{
+class DataPusher { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   /*
       This class determines which animation to be shown where and pushes weather data accordingly.
-  */
+   */
   SerialInterface mySerialInterface;
   Circle preview;
   Circle analysis;
   Circle result;
-  int sensorThreshold = 20;
+  int sensorThreshold = 80;
+  int numSensors = 6;
+  boolean sensorsReady[] = new boolean[numSensors];
   int previewIndex = 0;
   int analysisIndex = 0;
   int resultLastPosition = 0;
-  
+
   ArrayList<String> allAnimations;
-  
-  DataPusher(SerialInterface si){
+
+  DataPusher(SerialInterface si) {
     mySerialInterface = si; 
     result = new Circle(width/4*2.5, height/4*3, 200, 136, 34, mySerialInterface);
     preview = new Circle(width/4*1, height/4*1, 100, 90, 24, mySerialInterface);
     analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
- //<>//
-    allAnimations = new ArrayList();    //<>//
-    allAnimations.add("HeatAnimation");   //<>//
-    allAnimations.add("MistAnimation");     //<>//
-    allAnimations.add("RainAnimation");     //<>//
+
+    allAnimations = new ArrayList();   
+    allAnimations.add("HeatAnimation");  
+    allAnimations.add("MistAnimation");    
+    allAnimations.add("RainAnimation");    
     allAnimations.add("WindAnimation");
- //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);    //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 1); //<>//
-    result.addAnimation(new HeatAnimation(),0);     //<>//
-    result.addAnimation(new HeatAnimation(),1);
-    analysis.addAnimation(new RedAnimation(),0);
-    analysis.addAnimation(new BlueAnimation(),1);
+
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);   
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);
+    result.addAnimation(new HeatAnimation(), 0);    
+    result.addAnimation(new HeatAnimation(), 1);
+    analysis.addAnimation(new RedAnimation(), 0);
+    analysis.addAnimation(new BlueAnimation(), 1);
   }
-  
-  void update(){
+
+  void update() {
     readStates();
     preview.update();
     analysis.update();
@@ -42,93 +44,91 @@ class DataPusher{
     analysis.display();
     result.display();
   }
-  
-  void readStates(){
+
+  void readStates() {
     int[] data = mySerialInterface.getSensorData(); 
-    
-    if (data[0] > sensorThreshold){
-      changePreview(false);
-    }
-    if (data[1] > sensorThreshold){
-      changePreview(true);
-    }
-    if (data[2] > sensorThreshold){
-      submitPreview();
-    }
-    if (data[3] > sensorThreshold){
-      changeAnalysis(false);
-    }
-    if (data[4] > sensorThreshold){
-      changeAnalysis(true);
-    }
-    if (data[5] > sensorThreshold){
-      submitAnalysis();
-    }
-    
     println(data);
-  
-  }
-  
-  //Used to emulate touch events
-  void keyPressed(){
-    switch (key) {
-      case '1': changePreview(false);
-        break; 
-      case '2': changePreview(true);
-        break;
-      case '3': submitPreview();
-        break;
-      case '4': changeAnalysis(false);
-        break;
-      case '5': changeAnalysis(true);
-        break;
-      case '6': submitAnalysis();
-        break;
-      case 'q': showLeds = !showLeds;
-        break;
-      case 'w': showPixels = !showPixels;
-        break;
+    for (int i = 0; i < data.length; i++) {
+      if (data[i] > sensorThreshold && sensorsReady[i]) {
+        sensorsReady[i] = false;
+        toggle(str(i));
+      } else {
+        sensorsReady[i] = true;
+      }
     }
-    
   }
-  
-  void submitPreview(){
-    result.addAnimation(animationCreator.create(result.getAnimationType(1)),0);
+
+  //Used to emulate touch events
+  void keyPressed() {
+    toggle(str(key));
+  }
+
+  void toggle(String c) {
+    switch (c) {
+    case "1": 
+      changePreview(false);
+      break; 
+    case "2": 
+      changePreview(true);
+      break;
+    case "3": 
+      submitPreview();
+      break;
+    case "4": 
+      changeAnalysis(false);
+      break;
+    case "5": 
+      changeAnalysis(true);
+      break;
+    case "6": 
+      submitAnalysis();
+      break;
+    case "q": 
+      showLeds = !showLeds;
+      break;
+    case "w": 
+      showPixels = !showPixels;
+      break;
+    }
+  }
+
+  void submitPreview() {
+    result.addAnimation(animationCreator.create(result.getAnimationType(1)), 0);
     result.removeAnimation(0);
     result.removeAnimation(0);
-    result.addAnimation(animationCreator.create(preview.getAnimationType(0)),1);
+    result.addAnimation(animationCreator.create(preview.getAnimationType(0)), 1);
     println("Submitting preview");
   }
-  
-  void changePreview(boolean forward){
-    if(forward){
+
+  void changePreview(boolean forward) {
+    if (forward) {
       previewIndex++;
     } else {
-      previewIndex--; 
+      previewIndex--;
     }
-    if (previewIndex > allAnimations.size()-1){
+    if (previewIndex > allAnimations.size()-1) {
       previewIndex = 0;
     } else if (previewIndex < 0) {
       previewIndex = allAnimations.size()-1;
     }
     preview.removeAnimations();
-    preview.addAnimation(animationCreator.create(allAnimations.get(previewIndex)),0);
-    preview.addAnimation(animationCreator.create(allAnimations.get(previewIndex)),1);
+    preview.addAnimation(animationCreator.create(allAnimations.get(previewIndex)), 0);
+    preview.addAnimation(animationCreator.create(allAnimations.get(previewIndex)), 1);
     println("Changing preview to: " + previewIndex);
   }
-  
-  void submitAnalysis(){
+
+  void submitAnalysis() {
     result.setAreaMode(analysisIndex);
     println("Submitting analysis");
   }
-  
-  void changeAnalysis(boolean forward){
-    if(forward){
+
+  void changeAnalysis(boolean forward) {
+    if (forward) {
       analysisIndex++;
     } else {
-      analysisIndex--; 
+      analysisIndex--;
     }
-    if (analysisIndex > analysis.getNumberOfMaps()-1){
+    if (analysisIndex > analysis.getNumberOfMaps()-1) {
       analysisIndex = 0;
     } else if (analysisIndex < 0) {
       analysisIndex = analysis.getNumberOfMaps()-1;
@@ -136,5 +136,4 @@ class DataPusher{
     analysis.setAreaMode(analysisIndex);
     println("Changing analysis to: " + analysisIndex );
   }
-  
 }

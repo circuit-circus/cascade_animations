@@ -1,4 +1,4 @@
-class SerialInterface { //<>// //<>// //<>// //<>//
+class SerialInterface {    //<>//
 
   Serial myPort;    
   ArrayList<Display> myDisplays;                   // Stores references to the displays that led data should be pulled from. 
@@ -8,7 +8,6 @@ class SerialInterface { //<>// //<>// //<>// //<>//
   int[] sensorData = new int[expectedBytes];       // Holds the touch data coming from the Teensy 
   int longestStrip = 170;                           // Because of the way the OctoWS2811 library works. Everything needs to be scaled to the longest strip length * 8 (the number of pins on the OctoWS2811 board). 
   int bufferChar = int('#');                       // Character that triggers SerialEvent 
-
   int[] gammatable = new int[256];                 // The gamma table is used for color correction on the LEDs. It is necessary to make the leds show the right colors. 
   float gamma = 1.7;                               // The gamma correction code is copied from Paul Stoffregens Movie2serial example. 
 
@@ -17,7 +16,7 @@ class SerialInterface { //<>// //<>// //<>// //<>//
 
     if (serialActive) {
       //String portName = Serial.list()[0];         // Default Windows port
-      String portName = "/dev/ttyACM0";             // Teensy port 
+      String portName = "/dev/ttyACM0";             // Raspberry Pi port 
       myPort = new Serial(pApp, portName);
       println("Serial Port: " + portName);
       myPort.bufferUntil(bufferChar);
@@ -41,7 +40,7 @@ class SerialInterface { //<>// //<>// //<>// //<>//
     byte[] sensorIn = new byte[expectedBytes]; // The length of the array should correspond to the amount of sensors
     myPort.readBytes(sensorIn);
     sensorData = int(sensorIn);
-    //println(sensorData[0] + " " + sensorData[1] + " " + sensorData[2] + " " + sensorData[3]);
+    //println(sensorData[0] + " " + sensorData[1] + " " + sensorData[2] + " " + sensorData[3] + " " + sensorData[4] + " " + sensorData[5]);
     myPort.clear();
   }
 
