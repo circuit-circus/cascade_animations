@@ -47,15 +47,16 @@ class DataPusher { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>/
 
   void readStates() {
     int[] data = mySerialInterface.getSensorData(); 
-    println(data);
+    //println(data);
     for (int i = 0; i < data.length; i++) {
       if (data[i] > sensorThreshold && sensorsReady[i]) {
         sensorsReady[i] = false;
-        toggle(str(i));
-      } else {
+        toggle(str(i+1));
+      } else if (data[i] <= sensorThreshold) {
         sensorsReady[i] = true;
       }
     }
+       //println(sensorsReady[1]);
   }
 
   //Used to emulate touch events
