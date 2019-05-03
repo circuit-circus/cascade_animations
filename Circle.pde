@@ -171,6 +171,7 @@ class Circle extends Display {
     for (Animation a : myAnimations){
       int loc = a.getAreaID();
       a.setPixels(allPixels, currentAreaMap[loc], loc);
+      println(loc);
     }  
   }
 

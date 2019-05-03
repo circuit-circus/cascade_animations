@@ -1,7 +1,6 @@
-class SerialInterface { //<>// //<>//
+class SerialInterface { //<>// //<>// //<>//
 
   Serial myPort;    
-  boolean serialActive = false;                     // Use this to turn off the Serial when running this without a microcontroller connected.
   ArrayList<Display> myDisplays;                   // Stores references to the displays that led data should be pulled from. 
   int serialCount = 0;                             // A count of how many bytes we receive
   int expectedBytes = 6;                           // The number of bytes of serial data we expect from the Teensy
