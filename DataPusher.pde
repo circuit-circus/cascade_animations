@@ -15,19 +15,19 @@ class DataPusher{
   
   DataPusher(SerialInterface si){
     mySerialInterface = si; 
-    result = new Circle(width/4*2.5, height/4*3, 200, 67, 17, mySerialInterface);
-    preview = new Circle(width/4*1, height/4*1, 100, 67, 17);
-    analysis = new Circle(width/4*3, height/4*1, 70, 67, 17);
- //<>// //<>//
-    allAnimations = new ArrayList();  //<>// //<>//
-    allAnimations.add("HeatAnimation");  //<>// //<>//
-    allAnimations.add("MistAnimation");  //<>// //<>//
-    allAnimations.add("RainAnimation");  //<>// //<>//
+    result = new Circle(width/4*2.5, height/4*3, 200, 136, 34, mySerialInterface);
+    preview = new Circle(width/4*1, height/4*1, 100, 90, 24, mySerialInterface);
+    analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
+ //<>//
+    allAnimations = new ArrayList();     //<>//
+    allAnimations.add("HeatAnimation");   //<>//
+    allAnimations.add("MistAnimation");    //<>//
+    allAnimations.add("RainAnimation");   //<>//
     allAnimations.add("WindAnimation");
- //<>// //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);  //<>// //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);  //<>// //<>//
-    result.addAnimation(new HeatAnimation(),0);  //<>// //<>//
+ //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);    //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);  //<>//
+    result.addAnimation(new HeatAnimation(),0);   //<>//
     result.addAnimation(new HeatAnimation(),1);
     analysis.addAnimation(new RedAnimation(),0);
     analysis.addAnimation(new BlueAnimation(),1);
@@ -47,7 +47,22 @@ class DataPusher{
     int[] data = mySerialInterface.getSensorData(); 
     
     if (data[0] > sensorThreshold){
-      //submitPreview();
+      changePreview(false);
+    }
+    if (data[1] > sensorThreshold){
+      changePreview(true);
+    }
+    if (data[2] > sensorThreshold){
+      submitPreview();
+    }
+    if (data[3] > sensorThreshold){
+      changeAnalysis(false);
+    }
+    if (data[4] > sensorThreshold){
+      changeAnalysis(true);
+    }
+    if (data[5] > sensorThreshold){
+      submitAnalysis();
     }
   
   }
@@ -67,24 +82,16 @@ class DataPusher{
         break;
       case '6': submitAnalysis();
         break;
-      case '7':
-        break;
-      case '8':
-        break;
     }
     
   }
   
   void submitPreview(){
+    result.addAnimation(animationCreator.create(result.getAnimationType(1)),0);
     result.removeAnimation(0);
-    if (resultLastPosition == 0){
-      resultLastPosition = 1; 
-    } else {
-      resultLastPosition = 0;
-    }
-    
-    result.addAnimation(animationCreator.create(preview.getAnimationType(0)),resultLastPosition);
-    println("Submit preview");
+    result.removeAnimation(0);
+    result.addAnimation(animationCreator.create(preview.getAnimationType(0)),1);
+    println("Submitting preview");
   }
   
   void changePreview(boolean forward){
@@ -105,9 +112,8 @@ class DataPusher{
   }
   
   void submitAnalysis(){
-    println("Submit analysis");
     result.setAreaMode(analysisIndex);
-    
+    println("Submitting analysis");
   }
   
   void changeAnalysis(boolean forward){
