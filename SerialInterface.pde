@@ -1,4 +1,4 @@
-class SerialInterface { //<>// //<>// //<>//
+class SerialInterface { //<>// //<>// //<>// //<>//
 
   Serial myPort;    
   ArrayList<Display> myDisplays;                   // Stores references to the displays that led data should be pulled from. 
@@ -16,7 +16,8 @@ class SerialInterface { //<>// //<>// //<>//
     myDisplays = new ArrayList();
 
     if (serialActive) {
-      String portName = Serial.list()[0];
+      //String portName = Serial.list()[0];         // Default Windows port
+      String portName = "/dev/ttyACM0";             // Teensy port 
       myPort = new Serial(pApp, portName);
       println("Serial Port: " + portName);
       myPort.bufferUntil(bufferChar);
