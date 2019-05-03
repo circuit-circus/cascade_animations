@@ -1,10 +1,10 @@
-
 import processing.serial.*;
+
 SerialInterface mySerialInterface;
 DataPusher myDataPusher; 
 AnimationCreator animationCreator;
-
 WeatherInterface myWeatherInterface;
+WebMonitor myWebMonitor;
 
 boolean displayAnimations = true;
 boolean serialActive = false;                     // Use this to turn off the Serial when running this without a microcontroller connected.
@@ -24,8 +24,9 @@ void setup() {
   
   animationCreator = new AnimationCreator();
   myDataPusher = new DataPusher(mySerialInterface);
-  
   myWeatherInterface = new WeatherInterface();
+  myWebMonitor = new WebMonitor(true);
+  myWebMonitor.sendAlive();
 }
 
 void draw() {
@@ -36,9 +37,11 @@ void draw() {
   textSize(15);
   text("FPS: " + frameRate, 20, 20);
   
-  // Check if an hour has passed. In that case, we should get new weather data
+  // Check if an hour has passed. In that case, we should get new weather data and send an update to the monitor server
   if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
     myWeatherInterface.update();
+    
+    myWebMonitor.sendAlive();
   }
 }
 
@@ -52,6 +55,9 @@ void keyPressed(){
       case 'w': 
         myWeatherInterface.update();
         myWeatherInterface.printLastWeatherData();
+        break;
+      case 'm': 
+        myWebMonitor.sendAlive();
         break;
   }
   
