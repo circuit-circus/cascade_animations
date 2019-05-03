@@ -23,6 +23,13 @@ class RainAnimation extends Animation {
       }
     }
   }
+  
+   void setPixels(color[] pix, int[] m,  int id) {
+    pixelList = pix;
+    map = m;
+    areaID = id;
+    myDrops.clear();
+  }
 
   class Drop {
     int index;
