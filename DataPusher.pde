@@ -6,7 +6,7 @@ class DataPusher{
   Circle preview;
   Circle analysis;
   Circle result;
-  int sensorThreshold = 50;
+  int sensorThreshold = 20;
   int previewIndex = 0;
   int analysisIndex = 0;
   int resultLastPosition = 0;
@@ -19,15 +19,15 @@ class DataPusher{
     preview = new Circle(width/4*1, height/4*1, 100, 90, 24, mySerialInterface);
     analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
  //<>//
-    allAnimations = new ArrayList();     //<>//
-    allAnimations.add("HeatAnimation");   //<>//
+    allAnimations = new ArrayList();    //<>//
+    allAnimations.add("HeatAnimation");  //<>//
     allAnimations.add("MistAnimation");    //<>//
-    allAnimations.add("RainAnimation");   //<>//
+    allAnimations.add("RainAnimation");    //<>//
     allAnimations.add("WindAnimation");
  //<>//
     preview.addAnimation(animationCreator.create("HeatAnimation"), 0);    //<>//
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);  //<>//
-    result.addAnimation(new HeatAnimation(),0);   //<>//
+    preview.addAnimation(animationCreator.create("HeatAnimation"), 1); //<>//
+    result.addAnimation(new HeatAnimation(),0);    //<>//
     result.addAnimation(new HeatAnimation(),1);
     analysis.addAnimation(new RedAnimation(),0);
     analysis.addAnimation(new BlueAnimation(),1);
@@ -64,6 +64,8 @@ class DataPusher{
     if (data[5] > sensorThreshold){
       submitAnalysis();
     }
+    
+    println(data);
   
   }
   
