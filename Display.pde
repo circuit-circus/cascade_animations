@@ -6,8 +6,7 @@ abstract class Display {
   int totalLeds = 0;
   int myID;
   int virtualDensity = 5; //Default resolution
-  boolean showLeds = true;
-  boolean showPixels = false;
+
   ArrayList<Animation> myAnimations;
 
   SerialInterface mySerialInterface;

@@ -14,9 +14,10 @@ abstract class Animation extends Object {
 
   abstract void animate();
 
-  void setPixels(color[] pix, int[] m,  int areaID) {
+  void setPixels(color[] pix, int[] m,  int id) {
     pixelList = pix;
     map = m;
+    areaID = id;
   }
 
   String getType() {

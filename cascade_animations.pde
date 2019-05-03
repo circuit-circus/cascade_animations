@@ -7,7 +7,9 @@ AnimationCreator animationCreator;
 WeatherInterface myWeatherInterface;
 
 boolean displayAnimations = true;
-
+boolean serialActive = false;                     // Use this to turn off the Serial when running this without a microcontroller connected.
+boolean showLeds = true;                          // Shows Turning this off improves performance
+boolean showPixels = false;                       // Turning this off improves performance greatly
 
 void setup() {
   size(800, 800);

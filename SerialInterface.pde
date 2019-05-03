@@ -1,13 +1,12 @@
-class SerialInterface { //<>//
+class SerialInterface { //<>// //<>// //<>// //<>//
 
   Serial myPort;    
-  boolean serialActive = false;                     // Use this to turn off the Serial when running this without a microcontroller connected.
   ArrayList<Display> myDisplays;                   // Stores references to the displays that led data should be pulled from. 
   int serialCount = 0;                             // A count of how many bytes we receive
-  int expectedBytes = 4;                           // The number of bytes of serial data we expect from the Teensy
+  int expectedBytes = 6;                           // The number of bytes of serial data we expect from the Teensy
   int[] serialInArray = new int[expectedBytes];    // Where we'll put what we receive
   int[] sensorData = new int[expectedBytes];       // Holds the touch data coming from the Teensy 
-  int longestStrip = 84;                           // Because of the way the OctoWS2811 library works. Everything needs to be scaled to the longest strip length * 8 (the number of pins on the OctoWS2811 board). 
+  int longestStrip = 170;                           // Because of the way the OctoWS2811 library works. Everything needs to be scaled to the longest strip length * 8 (the number of pins on the OctoWS2811 board). 
   int bufferChar = int('#');                       // Character that triggers SerialEvent 
 
   int[] gammatable = new int[256];                 // The gamma table is used for color correction on the LEDs. It is necessary to make the leds show the right colors. 
@@ -17,7 +16,8 @@ class SerialInterface { //<>//
     myDisplays = new ArrayList();
 
     if (serialActive) {
-      String portName = Serial.list()[0];
+      //String portName = Serial.list()[0];         // Default Windows port
+      String portName = "/dev/ttyACM0";             // Teensy port 
       myPort = new Serial(pApp, portName);
       println("Serial Port: " + portName);
       myPort.bufferUntil(bufferChar);
