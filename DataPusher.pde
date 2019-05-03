@@ -20,14 +20,14 @@ class DataPusher{
     analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
  //<>//
     allAnimations = new ArrayList();    //<>//
-    allAnimations.add("HeatAnimation");  //<>//
-    allAnimations.add("MistAnimation");    //<>//
-    allAnimations.add("RainAnimation");    //<>//
+    allAnimations.add("HeatAnimation");   //<>//
+    allAnimations.add("MistAnimation");     //<>//
+    allAnimations.add("RainAnimation");     //<>//
     allAnimations.add("WindAnimation");
  //<>//
     preview.addAnimation(animationCreator.create("HeatAnimation"), 0);    //<>//
     preview.addAnimation(animationCreator.create("HeatAnimation"), 1); //<>//
-    result.addAnimation(new HeatAnimation(),0);    //<>//
+    result.addAnimation(new HeatAnimation(),0);     //<>//
     result.addAnimation(new HeatAnimation(),1);
     analysis.addAnimation(new RedAnimation(),0);
     analysis.addAnimation(new BlueAnimation(),1);
@@ -83,6 +83,10 @@ class DataPusher{
       case '5': changeAnalysis(true);
         break;
       case '6': submitAnalysis();
+        break;
+      case 'q': showLeds = !showLeds;
+        break;
+      case 'w': showPixels = !showPixels;
         break;
     }
     
