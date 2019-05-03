@@ -4,6 +4,8 @@ SerialInterface mySerialInterface;
 DataPusher myDataPusher; 
 AnimationCreator animationCreator;
 
+WeatherInterface myWeatherInterface;
+
 boolean displayAnimations = true;
 
 
@@ -20,6 +22,8 @@ void setup() {
   
   animationCreator = new AnimationCreator();
   myDataPusher = new DataPusher(mySerialInterface);
+  
+  myWeatherInterface = new WeatherInterface();
 }
 
 void draw() {
@@ -29,6 +33,11 @@ void draw() {
   fill(255);
   textSize(15);
   text("FPS: " + frameRate, 20, 20);
+  
+  // Check if an hour has passed. In that case, we should get new weather data
+  if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
+    myWeatherInterface.update();
+  }
 }
 
 void serialEvent(Serial myPort) {
@@ -37,5 +46,12 @@ void serialEvent(Serial myPort) {
 }
 
 void keyPressed(){
+  switch (key) {
+      case 'w': 
+        myWeatherInterface.update();
+        myWeatherInterface.printLastWeatherData();
+        break;
+  }
+  
   myDataPusher.keyPressed();
 }
