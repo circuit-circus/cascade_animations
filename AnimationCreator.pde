@@ -12,6 +12,8 @@ class AnimationCreator{
     case "WindAnimation" : return new WindAnimation();
     case "MistAnimation" : return new MistAnimation();
     case "RainAnimation" : return new RainAnimation();
+    case "TemperatureAnimation" : return new TemperatureAnimation();
+    case "CoverAnimation" : return new CoverAnimation();
     default : println("No Such Animation " + AnimationType); return null;
     }
   }

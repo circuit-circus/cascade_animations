@@ -1,6 +1,6 @@
-class DataPusher { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class DataPusher { //<>//
   /*
-      This class determines which animation to be shown where and pushes weather data accordingly.
+      This class determines which animation to be shown where.
    */
   SerialInterface mySerialInterface;
   Circle preview;
@@ -26,6 +26,8 @@ class DataPusher { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>/
     allAnimations.add("MistAnimation");    
     allAnimations.add("RainAnimation");    
     allAnimations.add("WindAnimation");
+    allAnimations.add("TemperatureAnimation");
+    allAnimations.add("CoverAnimation");
 
     preview.addAnimation(animationCreator.create("HeatAnimation"), 0);   
     preview.addAnimation(animationCreator.create("HeatAnimation"), 1);

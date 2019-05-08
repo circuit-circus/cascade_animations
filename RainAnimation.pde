@@ -11,6 +11,7 @@ class RainAnimation extends Animation {
   }
 
   void animate() {
+    numDrops = round(600 * norm(myWeatherInterface.getLatestPrecipitation(),0, 20));
     if (myDrops.size() < numDrops) {
       myDrops.add(new Drop(round(random(0, map.length-1))));
     }

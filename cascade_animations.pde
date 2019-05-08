@@ -25,7 +25,7 @@ void setup() {
   myDataPusher = new DataPusher(mySerialInterface);
   myWeatherInterface = new WeatherInterface();
   myWebMonitor = new WebMonitor(true);
-  myWebMonitor.sendAlive();
+  //myWebMonitor.sendAlive();
 }
 
 void draw() {
@@ -35,11 +35,11 @@ void draw() {
   fill(255);
   textSize(15);
   text("FPS: " + frameRate, 20, 20);
-  
+
   // Check if an hour has passed. In that case, we should get new weather data and send an update to the monitor server
-  if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
+  if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
     myWeatherInterface.update();
-    
+
     myWebMonitor.sendAlive();
   }
 }
@@ -51,20 +51,38 @@ void serialEvent(Serial myPort) {
   //println("Serial Event");
 }
 
-<<<<<<< HEAD
 void keyPressed() {
-=======
-void keyPressed(){
   switch (key) {
-      case 'w': 
-        myWeatherInterface.update();
-        myWeatherInterface.printLastWeatherData();
-        break;
-      case 'm': 
-        myWebMonitor.sendAlive();
-        break;
+  case 'w': 
+    myWeatherInterface.update();
+    myWeatherInterface.printLastWeatherData();
+    break;
+  case 'm': 
+    myWebMonitor.sendAlive();
+    break;
   }
-  
->>>>>>> 11b91347ddbe178c00d5b53964c039a581f2d77d
+
   myDataPusher.keyPressed();
 }
+
+//Saturating color function
+//color addColors(color c1, color c2) {
+//  colorMode(RGB);
+//  color c;
+
+//  int r1 = (c1 >> 16) & 0xFF;  // Faster way of getting red(argb)
+//  int g1 = (c1 >> 8) & 0xFF;   // Faster way of getting green(argb)
+//  int b1 = c1 & 0xFF;          // Faster way of getting blue(argb)
+
+//  int r2 = (c2 >> 16) & 0xFF;  // Faster way of getting red(argb)
+//  int g2 = (c2 >> 8) & 0xFF;   // Faster way of getting green(argb)
+//  int b2 = c2 & 0xFF;          // Faster way of getting blue(argb)
+
+//  int r = min(255, r1+r2);
+//  int g = min(255, g1+g2);
+//  int b = min(255, b1+b2);
+
+//  c = color(r, g, b);
+
+//  return c;
+//}
