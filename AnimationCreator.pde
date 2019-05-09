@@ -5,16 +5,16 @@ class AnimationCreator{
   
   AnimationCreator(){}
   
-  Animation create(String AnimationType){
+  Animation create(String animationType){
   
-    switch (AnimationType){
+    switch (animationType){
     case "HeatAnimation" : return new HeatAnimation();
     case "WindAnimation" : return new WindAnimation();
     case "MistAnimation" : return new MistAnimation();
     case "RainAnimation" : return new RainAnimation();
     case "TemperatureAnimation" : return new TemperatureAnimation();
     case "CoverAnimation" : return new CoverAnimation();
-    default : println("No Such Animation " + AnimationType); return null;
+    default : println("No Such Animation " + animationType); return null;
     }
   }
 

@@ -11,7 +11,7 @@ class WindAnimation extends Animation {
   float movementBaseSpeed = 2; 
 
   WindAnimation() {
-    AnimationType = "WindAnimation";
+    animationType = "WindAnimation";
     movement = new CompoundCurve();
     movement.addCurve(0.3, 1, 1, 0.3, 50);
     movement.addCurve(0.3, 1, 0, 0.3, 100);

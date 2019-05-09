@@ -7,7 +7,7 @@ class RainAnimation extends Animation {
   ArrayList<Drop> myDrops = new ArrayList();
   int numDrops = 400; 
   RainAnimation() {
-    AnimationType = "RainAnimation";
+    animationType = "RainAnimation";
   }
 
   void animate() {

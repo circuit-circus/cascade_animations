@@ -6,7 +6,7 @@ class TemperatureAnimation extends Animation {
   color hot;
 
   TemperatureAnimation() {
-    AnimationType = "TemperatureAnimation";
+    animationType = "TemperatureAnimation";
     colorMode(HSB);
     cold = color(150, 60, 255);
     hot = color(27, 250, 255);

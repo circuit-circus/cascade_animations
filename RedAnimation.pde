@@ -4,6 +4,7 @@ class RedAnimation extends Animation {
    */
 
   RedAnimation() {
+    animationType = "red";
   }
 
   void animate() {

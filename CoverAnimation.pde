@@ -6,7 +6,7 @@ class CoverAnimation extends Animation {
   int cloudSize = 50;
 
   CoverAnimation() {
-    AnimationType = "CoverAnimation";
+    animationType = "CoverAnimation";
   }
 
   void animate() { 

@@ -117,7 +117,7 @@ class DataPusher { //<>//
     preview.removeAnimations();
     preview.addAnimation(animationCreator.create(allAnimations.get(previewIndex)), 0);
     preview.addAnimation(animationCreator.create(allAnimations.get(previewIndex)), 1);
-    println("Changing preview to: " + previewIndex);
+    println("Changing preview to: " + previewIndex + " " + preview.getAnimationType(0));
   }
 
   void submitAnalysis() {

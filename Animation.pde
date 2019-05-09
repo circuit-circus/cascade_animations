@@ -2,7 +2,7 @@ abstract class Animation extends Object {
 
   color[] pixelList; 
   int[] map;
-  String AnimationType = "Animation";
+  String animationType = "Animation";
   int areaID;
 
   Animation() {
@@ -21,7 +21,7 @@ abstract class Animation extends Object {
   }
 
   String getType() {
-    return AnimationType;
+    return animationType;
   }
   
   int getAreaID(){
