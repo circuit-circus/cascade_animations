@@ -37,8 +37,8 @@ void draw() {
   text("FPS: " + frameRate, 20, 20);
 
   // Check if an hour has passed. In that case, we should get new weather data and send an update to the monitor server
-  if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
-  // if(Calendar.getInstance().get(Calendar.MINUTE) != myWeatherInterface.getLastUpdatedHour()) {
+  // if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
+  if(Calendar.getInstance().get(Calendar.MINUTE) != myWeatherInterface.getLastUpdatedHour()) {
     myWeatherInterface.update();
 
     myWebMonitor.sendAlive();
