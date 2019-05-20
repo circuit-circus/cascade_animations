@@ -7,10 +7,11 @@ class RainAnimation extends Animation {
   ArrayList<Drop> myDrops = new ArrayList();
   int numDrops = 400; 
   RainAnimation() {
-    AnimationType = "RainAnimation";
+    animationType = "RainAnimation";
   }
 
   void animate() {
+    numDrops = round(600 * norm(myWeatherInterface.getLatestPrecipitation(),0, 20));
     if (myDrops.size() < numDrops) {
       myDrops.add(new Drop(round(random(0, map.length-1))));
     }

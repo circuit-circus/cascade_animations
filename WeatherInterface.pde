@@ -4,12 +4,12 @@ import java.util.Calendar;
 
 class WeatherInterface {
 
-  
+
   final String LAT = "55.6979606";
   final String LON = "12.5384718";
-  
+
   XML xml;
-  
+
   Calendar lastUpdatedTime;
   String tomorrowsTime;
 
@@ -25,55 +25,56 @@ class WeatherInterface {
     update();
     printLastWeatherData();
   }
-  
-  
+
+
   void update() {
     println("Updating weather interface");
     setTomorrowsTime();
     updateWeatherData();
   }
-  
+
   // Calculate tomorrow at 14:00
   void setTomorrowsTime() {
-        
+
     // Make a calendar object in order to calculate tomorrow
     Calendar c = Calendar.getInstance();
     // Set it to now
     c.setTime(new Date()); 
     // Clone it, so we can know when it was last updated
     lastUpdatedTime = (Calendar)c.clone(); 
-    
+
     // Turn it into tomorrow at 14:00
     c.add(Calendar.DATE, 1);
     c.set(Calendar.HOUR_OF_DAY, 14);
     c.set(Calendar.MINUTE, 0);
     c.set(Calendar.SECOND, 0);
     Date tomorrow = c.getTime();
-    
+
     // Format it in the same way that met.no does
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //create new date format
     tomorrowsTime = format.format(tomorrow);
   }
-  
+
   void updateWeatherData() {
     try {
       println("Updating weather XML");
       xml = loadXML("https://api.met.no/weatherapi/locationforecast/1.9/?lat=" + LAT + "&lon=" + LON + "&msl=20");
-    } catch(Exception e) {
+    } 
+    catch(Exception e) {
       println(e);
     }
-    
-    if(xml != null) {
+
+    if (xml != null) {
       XML[] timePoints = xml.getChild("product").getChildren("time");
       ArrayList<XML> tomorrowsTimePoints = new ArrayList<XML>();
-          
+
       for (int i = 0; i < timePoints.length; i++) {
-        if(timePoints[i].getString("to").trim().equals(tomorrowsTime) ) {
+        if (timePoints[i].getString("to").trim().equals(tomorrowsTime) ) {
           XML dataPoint = timePoints[i];
           tomorrowsTimePoints.add(dataPoint);
-          
+
           dataPoint = dataPoint.getChild("location");
-          
+
           latestTemperature = ( (dataPoint.getChild("temperature") != null && dataPoint.getChild("temperature").getString("value") != null) && latestTemperature.length() == 0 ) ? dataPoint.getChild("temperature").getString("value") : latestTemperature;
           latestWindSpeed = ( (dataPoint.getChild("windSpeed") != null && dataPoint.getChild("windSpeed").getString("mps") != null) && latestWindSpeed.length() == 0 ) ? dataPoint.getChild("windSpeed").getString("mps") : latestWindSpeed;
           latestWindGust = ( (dataPoint.getChild("windGust") != null && dataPoint.getChild("windGust").getString("mps") != null) && latestWindGust.length() == 0 ) ? dataPoint.getChild("windGust").getString("mps") : latestWindGust;
@@ -84,7 +85,7 @@ class WeatherInterface {
       }
     }
   }
-  
+
   void printLastWeatherData() {
     println("Temp: " + latestTemperature + "°C");
     println("Wind: " + latestWindSpeed + "m/s");
@@ -93,10 +94,23 @@ class WeatherInterface {
     println("Fog: " + latestFog + "%");
     println("Rain: " + latestPrecipitation + "mm");
   }
-  
+
   int getLastUpdatedHour() {
     return (int)lastUpdatedTime.get(Calendar.MINUTE);
   }
-  
 
+  float getLatestCloudiness() {
+    float cloudiness = int(latestCloudiness);
+    return cloudiness;
+  }
+
+  float getLatestTemperature() {
+    float temperature = int(latestTemperature);
+    return temperature;
+  }
+
+  float getLatestPrecipitation() {
+    float precipitation = int(latestPrecipitation);
+    return precipitation;
+  }
 }

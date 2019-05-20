@@ -1,7 +1,6 @@
 abstract class Display {
   /*
   This class should generalize the concept of have physical and virtual pixels and attaching animations to them. 
-   It should maybe be abstract
    */
   int totalLeds = 0;
   int myID;
@@ -11,8 +10,8 @@ abstract class Display {
 
   SerialInterface mySerialInterface;
 
-
   Display() {
+  
   }
   
   color[] getLedData() {
