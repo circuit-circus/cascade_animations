@@ -3,19 +3,19 @@ import http.requests.*;
 class WebMonitor {
 
   PostRequest postAlive;
+  WebMonitorConfig config;
   boolean debugMode;
   String serverAddress = "https://cascade-monitor.herokuapp.com/";
 
   WebMonitor(boolean debugMode) {
+    this.config = new WebMonitorConfig();
     this.debugMode = debugMode;
     if (!debugMode) {
       serverAddress = "test";
     }
 
     postAlive = new PostRequest(serverAddress + "/alive");
-    // Add the Cascade password here before exporting application
-    // DON'T PUSH THE PASSWORD TO GITHUB OR BITBUCKET
-    postAlive.addUser("cascadepi", "PASSWORD");
+    postAlive.addUser("cascadepi", this.config.Password);
 };
 
   void sendAlive() {
