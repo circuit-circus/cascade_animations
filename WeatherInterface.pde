@@ -95,7 +95,7 @@ class WeatherInterface {
   }
   
   int getLastUpdatedHour() {
-    return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
+    return (int)lastUpdatedTime.get(Calendar.MINUTE);
   }
   
 

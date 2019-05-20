@@ -37,7 +37,7 @@ void draw() {
   text("FPS: " + frameRate, 20, 20);
   
   // Check if an hour has passed. In that case, we should get new weather data and send an update to the monitor server
-  if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) != myWeatherInterface.getLastUpdatedHour()) {
+  if(Calendar.getInstance().get(Calendar.MINUTE) != myWeatherInterface.getLastUpdatedHour()) {
     myWeatherInterface.update();
     
     myWebMonitor.sendAlive();
@@ -51,9 +51,7 @@ void serialEvent(Serial myPort) {
   //println("Serial Event");
 }
 
-<<<<<<< HEAD
-void keyPressed() {
-=======
+
 void keyPressed(){
   switch (key) {
       case 'w': 
@@ -65,6 +63,5 @@ void keyPressed(){
         break;
   }
   
->>>>>>> 11b91347ddbe178c00d5b53964c039a581f2d77d
   myDataPusher.keyPressed();
 }

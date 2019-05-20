@@ -17,7 +17,7 @@ class DataPusher { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>/
 
   DataPusher(SerialInterface si) {
     mySerialInterface = si; 
-    result = new Circle(width/4*2.5, height/4*3, 200, 136, 34, mySerialInterface);
+    result = new Circle(width/4*2.5, height/4*3, 200, 121, 26, mySerialInterface);
     preview = new Circle(width/4*1, height/4*1, 100, 90, 24, mySerialInterface);
     analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
 
