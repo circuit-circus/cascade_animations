@@ -22,19 +22,14 @@ class DataPusher { //<>//
     analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
 
     allAnimations = new ArrayList();   
-    allAnimations.add("HeatAnimation");  
-    allAnimations.add("MistAnimation");    
+    allAnimations.add("TemperatureAnimation");
     allAnimations.add("RainAnimation");    
     allAnimations.add("WindAnimation");
-    allAnimations.add("TemperatureAnimation");
-    allAnimations.add("CoverAnimation");
     allAnimations.add("CloudAnimation");
-     allAnimations.add("PrecipitationAnimation");
-
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 0);   
-    preview.addAnimation(animationCreator.create("HeatAnimation"), 1);
-    result.addAnimation(new HeatAnimation(), 0);    
-    result.addAnimation(new HeatAnimation(), 1);
+    preview.addAnimation(animationCreator.create("TemperatureAnimation"), 0);   
+    preview.addAnimation(animationCreator.create("TemperatureAnimation"), 1);
+    result.addAnimation(new TemperatureAnimation(), 0);    
+    result.addAnimation(new TemperatureAnimation(), 1);
     analysis.addAnimation(new RedAnimation(), 0);
     analysis.addAnimation(new BlueAnimation(), 1);
   }
@@ -60,7 +55,7 @@ class DataPusher { //<>//
         sensorsReady[i] = true;
       }
     }
-       //println(sensorsReady[1]);
+    //println(sensorsReady[1]);
   }
 
   //Used to emulate touch events
