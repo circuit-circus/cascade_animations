@@ -28,6 +28,8 @@ class DataPusher { //<>//
     allAnimations.add("WindAnimation");
     allAnimations.add("TemperatureAnimation");
     allAnimations.add("CoverAnimation");
+    allAnimations.add("CloudAnimation");
+     allAnimations.add("PrecipitationAnimation");
 
     preview.addAnimation(animationCreator.create("HeatAnimation"), 0);   
     preview.addAnimation(animationCreator.create("HeatAnimation"), 1);

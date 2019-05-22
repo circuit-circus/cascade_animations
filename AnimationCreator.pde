@@ -14,6 +14,8 @@ class AnimationCreator{
     case "RainAnimation" : return new RainAnimation();
     case "TemperatureAnimation" : return new TemperatureAnimation();
     case "CoverAnimation" : return new CoverAnimation();
+    case "CloudAnimation" : return new CloudAnimation();
+    case "PrecipitationAnimation" : return new PrecipitationAnimation();
     default : println("No Such Animation " + animationType); return null;
     }
   }

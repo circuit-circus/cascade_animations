@@ -1,22 +1,40 @@
 class RainAnimation extends Animation {
-
-  /*
-    A specific animation to evoke the connotations of rain
-   */
- 
   ArrayList<Drop> myDrops = new ArrayList();
-  int numDrops = 400; 
+  int numDrops = 100, maxDrops = 500;
+  float rain, dry = 0, rainstorm = 20;
+  float noise, noiseMax = 25, time, timer;
+  int baseBlue = 140;
+
   RainAnimation() {
     animationType = "RainAnimation";
   }
 
-  void animate() {
-    numDrops = round(600 * norm(myWeatherInterface.getLatestPrecipitation(),0, 20));
-    if (myDrops.size() < numDrops) {
-      myDrops.add(new Drop(round(random(0, map.length-1))));
+  void animate() {          
+    rain = myWeatherInterface.getLatestPrecipitation();
+    //Uncomment to debug number of raindrops with mouseX
+    //rain = map(mouseX, 0, width, dry, rainstorm); println("rain: " + rain, "numDrops:" + numDrops);
+
+    numDrops = round(maxDrops * norm(rain, dry, rainstorm));
+    numDrops = int(constrain(numDrops, dry, maxDrops));
+
+    colorMode(HSB);
+    for (int i = 0; i < map.length; i++) {
+      time = i/5.0 + timer;
+      noise = map(noise(time), 0, 1, -noiseMax, noiseMax);
+      pixelList[map[i]] = color(baseBlue+noise, 200, 255);
+    }
+    timer += 0.05;
+
+    for (int i = 0; i<int(numDrops/20); i++) {
+      if (myDrops.size() < numDrops) {
+        myDrops.add(new Drop(round(random(0, map.length-1))));
+      }
+      //println(myDrops.size());
     }
 
+
     for (int i = 0; i < myDrops.size(); i++) {
+
       if (myDrops.get(i).hasEnded()) {
         myDrops.remove(i);
       } else {
@@ -24,8 +42,8 @@ class RainAnimation extends Animation {
       }
     }
   }
-  
-   void setPixels(color[] pix, int[] m,  int id) {
+
+  void setPixels(color[] pix, int[] m, int id) {
     pixelList = pix;
     map = m;
     areaID = id;
@@ -34,17 +52,17 @@ class RainAnimation extends Animation {
 
   class Drop {
     int index;
-    int life = 100;
     CompoundCurve fade;
     Drop(int i) {
       index = i;
       fade = new CompoundCurve();
-      fade.addCurve(1, 1, 0, 0, 20);
+      fade.addCurve(0, 0, 1, 1, map(myDrops.size(), 0, numDrops, 150, 10));
+      fade.addCurve(1, 1, 0, 0, map(myDrops.size(), 0, numDrops, 150, 10));
     }
 
     void update() {
       colorMode(HSB);
-      pixelList[map[index]] = color(150, 200, fade.animate()*255);
+      pixelList[map[index]] = color(baseBlue+noise, 200, fade.animate()*255);
     }
 
     boolean hasEnded() {

@@ -113,4 +113,9 @@ class WeatherInterface {
     float precipitation = int(latestPrecipitation);
     return precipitation;
   }
+  
+  float getLatestWind() {
+    float wind = int(latestWindGust);
+    return wind;
+  }
 }

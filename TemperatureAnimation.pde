@@ -1,37 +1,39 @@
 class TemperatureAnimation extends Animation {
-
-  float noiseX = 0;
-  float temperature = 0; 
-  color cold;
-  color hot;
+  float temp, minTemp = -5, breakingPoint = 5, maxTemp = 35;
+  float multiplier = 25, foundation = 100, r, g, b, noise;
 
   TemperatureAnimation() {
     animationType = "TemperatureAnimation";
-    colorMode(HSB);
-    cold = color(150, 60, 255);
-    hot = color(27, 250, 255);
   }
 
   void animate() { 
-    colorMode(HSB); 
-    temperature = myWeatherInterface.getLatestTemperature();
-    float colorIncrement = norm(temperature, -5, 25);
-    //colorIncrement = 0.9;
-    color c = lerpColor(cold, hot, colorIncrement);
-    //println(temperature + " " + colorIncrement + " " + hex(c));
+    temp = myWeatherInterface.getLatestTemperature();
+    //temp = map(mouseX, 0, width, minTemp, maxTemp);
+    temp = constrain(temp, minTemp, maxTemp);
+
+    colorMode(RGB);
+    if (temp <= 5) {
+      r = map(temp, minTemp, breakingPoint, 0, -multiplier*2);
+      g = map(temp, minTemp, breakingPoint, multiplier*4, 0);
+      b = map(temp, minTemp, breakingPoint, multiplier*10, multiplier*8);
+    } else {
+      r = 150;
+      g = map(temp, breakingPoint, maxTemp, multiplier*5, -multiplier*2);
+      b = map(temp, breakingPoint, maxTemp, multiplier, -multiplier*2);
+    }
+
     for (int i = 0; i < map.length; i++) {
       float noiseVal = 0; 
       if (i > pixelList.length/2) {
-        noiseVal = noise(noiseX+i/10)*200;
+        noiseVal = noise(noise+i/10)*map(temp, minTemp, maxTemp, multiplier*2, multiplier*8);
       } else {
-        noiseVal = noise(noiseX-i/10)*200;
+        noiseVal = noise(noise-i/10)*map(temp, minTemp, maxTemp, multiplier*2, multiplier*8);
       }
       int index = map[i];
-      //println(noiseVal);
-      //float bright = brightness(c) - noiseVal;
-      //c = color(hue(c), saturation(c), bright);
+
+      color c = color(foundation+r-noiseVal, foundation+g-noiseVal, foundation+b-noiseVal);
       pixelList[index] = c;
     }
-    noiseX += 0.1;
+    noise += map(temp, minTemp, maxTemp, 0.001, 0.05);
   }
 }
