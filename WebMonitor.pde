@@ -3,24 +3,28 @@ import http.requests.*;
 class WebMonitor {
 
   PostRequest postAlive;
+  WebMonitorConfig config;
   boolean debugMode;
-  String serverAdress = "http://localhost:5000";
+  String serverAddress = "https://cascade-monitor.herokuapp.com/";
 
   WebMonitor(boolean debugMode) {
+    this.config = new WebMonitorConfig();
     this.debugMode = debugMode;
     if (!debugMode) {
-      serverAdress = "test";
+      serverAddress = "test";
     }
 
-    postAlive = new PostRequest(serverAdress + "/alive");
-  };
+    postAlive = new PostRequest(serverAddress + "/alive");
+    postAlive.addUser("cascadepi", this.config.Password);
+};
 
   void sendAlive() {
     postAlive.send();
     println(postAlive.getContent());
     if(postAlive.getContent() != null) {
-      println("Reponse Content: " + postAlive.getContent());
-      println("Reponse Content-Length Header: " + postAlive.getHeader("Content-Length"));
+      println("Sent Alive");
+      //println("Reponse Content: " + postAlive.getContent());
+      //println("Reponse Content-Length Header: " + postAlive.getHeader("Content-Length"));
     }
   }
     

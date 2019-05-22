@@ -65,22 +65,28 @@ class WeatherInterface {
     }
 
     if (xml != null) {
-      XML[] timePoints = xml.getChild("product").getChildren("time");
-      ArrayList<XML> tomorrowsTimePoints = new ArrayList<XML>();
-
-      for (int i = 0; i < timePoints.length; i++) {
-        if (timePoints[i].getString("to").trim().equals(tomorrowsTime) ) {
-          XML dataPoint = timePoints[i];
-          tomorrowsTimePoints.add(dataPoint);
-
-          dataPoint = dataPoint.getChild("location");
-
-          latestTemperature = ( (dataPoint.getChild("temperature") != null && dataPoint.getChild("temperature").getString("value") != null) && latestTemperature.length() == 0 ) ? dataPoint.getChild("temperature").getString("value") : latestTemperature;
-          latestWindSpeed = ( (dataPoint.getChild("windSpeed") != null && dataPoint.getChild("windSpeed").getString("mps") != null) && latestWindSpeed.length() == 0 ) ? dataPoint.getChild("windSpeed").getString("mps") : latestWindSpeed;
-          latestWindGust = ( (dataPoint.getChild("windGust") != null && dataPoint.getChild("windGust").getString("mps") != null) && latestWindGust.length() == 0 ) ? dataPoint.getChild("windGust").getString("mps") : latestWindGust;
-          latestCloudiness = ( (dataPoint.getChild("cloudiness") != null && dataPoint.getChild("cloudiness").getString("percent") != null) && latestCloudiness.length() == 0 ) ? dataPoint.getChild("cloudiness").getString("percent") : latestCloudiness;
-          latestFog = ( (dataPoint.getChild("fog") != null && dataPoint.getChild("fog").getString("percent") != null) && latestFog.length() == 0 ) ? dataPoint.getChild("fog").getString("percent") : latestFog;
-          latestPrecipitation = ( (dataPoint.getChild("precipitation") != null && dataPoint.getChild("precipitation").getString("value") != null) && latestPrecipitation.length() == 0 ) ? dataPoint.getChild("precipitation").getString("value") : latestPrecipitation;
+      XML prod = xml.getChild("product");
+      if(prod != null) {
+        XML[] timePoints = prod.getChildren("time");
+        ArrayList<XML> tomorrowsTimePoints = new ArrayList<XML>();
+        
+        if(timePoints != null) {
+          for (int i = 0; i < timePoints.length; i++) {
+            if (timePoints[i].getString("to").trim().equals(tomorrowsTime) ) {
+              XML dataPoint = timePoints[i];
+              tomorrowsTimePoints.add(dataPoint);
+    
+              dataPoint = dataPoint.getChild("location");
+              if(dataPoint != null) {
+                latestTemperature = ( (dataPoint.getChild("temperature") != null && dataPoint.getChild("temperature").getString("value") != null) && latestTemperature.length() == 0 ) ? dataPoint.getChild("temperature").getString("value") : latestTemperature;
+                latestWindSpeed = ( (dataPoint.getChild("windSpeed") != null && dataPoint.getChild("windSpeed").getString("mps") != null) && latestWindSpeed.length() == 0 ) ? dataPoint.getChild("windSpeed").getString("mps") : latestWindSpeed;
+                latestWindGust = ( (dataPoint.getChild("windGust") != null && dataPoint.getChild("windGust").getString("mps") != null) && latestWindGust.length() == 0 ) ? dataPoint.getChild("windGust").getString("mps") : latestWindGust;
+                latestCloudiness = ( (dataPoint.getChild("cloudiness") != null && dataPoint.getChild("cloudiness").getString("percent") != null) && latestCloudiness.length() == 0 ) ? dataPoint.getChild("cloudiness").getString("percent") : latestCloudiness;
+                latestFog = ( (dataPoint.getChild("fog") != null && dataPoint.getChild("fog").getString("percent") != null) && latestFog.length() == 0 ) ? dataPoint.getChild("fog").getString("percent") : latestFog;
+                latestPrecipitation = ( (dataPoint.getChild("precipitation") != null && dataPoint.getChild("precipitation").getString("value") != null) && latestPrecipitation.length() == 0 ) ? dataPoint.getChild("precipitation").getString("value") : latestPrecipitation;
+              }
+            }
+          }
         }
       }
     }
@@ -96,7 +102,8 @@ class WeatherInterface {
   }
 
   int getLastUpdatedHour() {
-    return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
+    return (int)lastUpdatedTime.get(Calendar.MINUTE);
+    // return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
   }
 
   float getLatestCloudiness() {
