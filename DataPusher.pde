@@ -17,9 +17,9 @@ class DataPusher { //<>//
 
   DataPusher(SerialInterface si) {
     mySerialInterface = si; 
-    result = new Circle(width/4*2.5, height/4*3, 200, 121, 26, mySerialInterface);
-    preview = new Circle(width/4*1, height/4*1, 100, 90, 24, mySerialInterface);
-    analysis = new Circle(width/4*3, height/4*1, 70, 61, 20, mySerialInterface);
+    result = new Circle(width/4*2.5, height/4*3, 200, 117, 29, mySerialInterface);
+    preview = new Circle(width/4*1, height/4*1, 100, 64, 16, mySerialInterface);
+    analysis = new Circle(width/4*3, height/4*1, 70, 32, 9, mySerialInterface);
 
     allAnimations = new ArrayList();   
     allAnimations.add("TemperatureAnimation");
