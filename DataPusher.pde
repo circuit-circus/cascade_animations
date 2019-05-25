@@ -1,4 +1,4 @@
-class DataPusher { //<>//
+class DataPusher {  //<>//
   /*
       This class determines which animation to be shown where.
    */

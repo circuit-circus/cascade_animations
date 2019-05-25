@@ -25,9 +25,12 @@ class WeatherInterface {
     update();
     printLastWeatherData();
   }
-
-
-  void update() {
+  
+  void update(){
+  thread("updateWeather");
+  }
+  
+  void updateThread() {
     println("Updating weather interface");
     setTomorrowsTime();
     updateWeatherData();
@@ -102,8 +105,8 @@ class WeatherInterface {
   }
 
   int getLastUpdatedHour() {
-    return (int)lastUpdatedTime.get(Calendar.MINUTE);
-    // return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
+    //return (int)lastUpdatedTime.get(Calendar.MINUTE);
+    return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
   }
 
   float getLatestCloudiness() {

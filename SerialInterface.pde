@@ -1,4 +1,4 @@
-class SerialInterface {    //<>//
+class SerialInterface {     //<>//
 
   Serial myPort;    
   ArrayList<Display> myDisplays;                   // Stores references to the displays that led data should be pulled from. 

@@ -6,8 +6,7 @@ class Circle extends Display {
   float x, y;
   float radius, innerRadius, outerRadius;
   int ledDiameter = 5;
-  //String[] areaModes = {"inOut", "split", "mix", "time"};
-  String[] areaModes = {"inOut", "split"};
+  String[] areaModes = {"inOut", "split", "oddEven", "splitSwitch"};
   int numAreas = 2; 
   int[][][] areaMaps = new int[areaModes.length][numAreas][]; //This way of storing maps work but is a bit tricky to read
   int[][] currentAreaMap;
@@ -30,7 +29,6 @@ class Circle extends Display {
     y = y_;
 
     mySerialInterface = si;
-    si.registerDisplay(this);
 
     myAnimations = new ArrayList();
 
@@ -81,13 +79,13 @@ class Circle extends Display {
         ellipse(cos(vAngle) * outerRadius, sin(vAngle) * outerRadius, ledDiameter, ledDiameter);
       }
     }
-    if (showLeds) {    //<>//
+    if (showLeds) {   //<>//
       stroke(0);    //<>//
-      //Drawing physical LEDs   //<>//
-      for (int i = 0; i < numOuterLeds; i++) {     //<>//
-        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4);    //<>//
+      //Drawing physical LEDs    //<>//
+      for (int i = 0; i < numOuterLeds; i++) {  //<>//
+        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4);   //<>//
         fill(outerLeds[i]);  //<>//
-        ellipse(cos(pAngle) * outerRadius, sin(pAngle) * outerRadius, ledDiameter, ledDiameter);  //<>//
+        ellipse(cos(pAngle) * outerRadius, sin(pAngle) * outerRadius, ledDiameter, ledDiameter);   //<>//
       }
       for (int i = 0; i < numInnerLeds; i++) {
         float pAngle = (TWO_PI / numInnerLeds) * i  + (TWO_PI/4);
@@ -119,11 +117,11 @@ class Circle extends Display {
     if (ani == null) {    //<>//
       return;
     }    //<>//
-    myAnimations.add(ani); //<>//
-    if (location == 0) {    //<>//
-      ani.setPixels(allPixels, currentAreaMap[location], location); //<>//
-    } else if (location == 1) {  //<>//
-      ani.setPixels(allPixels, currentAreaMap[location], location); //<>//
+    myAnimations.add(ani);    //<>//
+    if (location == 0) {     //<>//
+      ani.setPixels(allPixels, currentAreaMap[location], location);    //<>//
+    } else if (location == 1) {    //<>//
+      ani.setPixels(allPixels, currentAreaMap[location], location);    //<>//
     }
   }
 
@@ -154,11 +152,11 @@ class Circle extends Display {
       currentAreaMap = areaMaps[1];
       updateAnimationPixels();
       break;
-    case "mix" : 
+    case "oddEven" : 
       currentAreaMap = areaMaps[2];
       updateAnimationPixels();
       break;
-    case "time": 
+    case "splitSwitch": 
       currentAreaMap = areaMaps[3];
       updateAnimationPixels();
       break;
@@ -225,5 +223,51 @@ class Circle extends Display {
       splitUpMap[count+i] = offset + i;
     }
     areaMaps[1][1] = splitUpMap;
+    
+    //Generate odd-even map
+    offset = 0;
+    count = 0; 
+    int[] oddMap = new int[ceil(allPixels.length/2.0)];
+    int[] evenMap = new int[floor(allPixels.length/2.0)+1];
+    int j = 0, k = 0;
+    println(allPixels.length);
+    for (int i = 0; i < allPixels.length; i++){
+      if(i % 2 == 0){
+        evenMap[j] = i;
+        j++;
+      } else {
+        oddMap[k] = i;
+        k++;
+      }
+    }
+    areaMaps[2][0] = oddMap;     
+    areaMaps[2][1] = evenMap;   
+    
+    //Generate splitSwitch map
+    offset = numOuterPixels/2;
+    count = 0;
+    int[] splitSwitchDownMap = new int[numOuterPixels/2 + numInnerPixels/2];
+    for (int i = 0; i < numOuterPixels/2; i++) {
+      splitSwitchDownMap[i] = offset + i;
+      count++;
+    } 
+    offset = numOuterPixels;
+    for (int i = 0; i < numInnerPixels/2; i++) {
+      splitSwitchDownMap[i+count] = offset + i;
+    }
+    areaMaps[3][0] = splitSwitchDownMap;
+
+    //Generate upper part of splitSwitch mode 
+    count = 0;
+    int[] splitSwitchUpMap = new int[numOuterPixels/2 + numInnerPixels/2];
+    for (int i = 0; i < numOuterPixels/2; i++) {
+      splitSwitchUpMap[i] = i;
+      count++;
+    } 
+    offset = numOuterPixels + numInnerPixels/2;
+    for (int i = 0; i < numInnerPixels/2; i++) {
+      splitSwitchUpMap[count+i] = offset + i;
+    }
+    areaMaps[3][1] = splitSwitchUpMap; 
   }
 }

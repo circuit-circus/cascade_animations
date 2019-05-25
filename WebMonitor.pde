@@ -18,7 +18,7 @@ class WebMonitor {
     postAlive.addUser("cascadepi", this.config.Password);
 };
 
-  void sendAlive() {
+  void sendAliveThread() {
     postAlive.send();
     println(postAlive.getContent());
     if(postAlive.getContent() != null) {
@@ -26,6 +26,10 @@ class WebMonitor {
       //println("Reponse Content: " + postAlive.getContent());
       //println("Reponse Content-Length Header: " + postAlive.getHeader("Content-Length"));
     }
+  }
+  
+  void sendAlive(){
+  thread("sendAliveMonitor");
   }
     
 }
