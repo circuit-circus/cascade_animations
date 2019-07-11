@@ -29,6 +29,7 @@ class Circle extends Display {
     y = y_;
 
     mySerialInterface = si;
+    si.registerDisplay(this);
 
     myAnimations = new ArrayList();
 

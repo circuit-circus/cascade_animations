@@ -106,7 +106,12 @@ class WeatherInterface {
 
   int getLastUpdatedHour() {
     //return (int)lastUpdatedTime.get(Calendar.MINUTE);
-    return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
+    if(lastUpdatedTime != null) {
+      return (int)lastUpdatedTime.get(Calendar.HOUR_OF_DAY);
+    }
+    else {
+      return 0;
+    }
   }
 
   float getLatestCloudiness() {

@@ -6,7 +6,7 @@ class DataPusher {  //<>//
   Circle preview;
   Circle analysis;
   Circle result;
-  int sensorThreshold = 80;
+  int sensorThreshold = 120;
   int numSensors = 6;
   boolean sensorsReady[] = new boolean[numSensors];
   int previewIndex = 0;
@@ -66,22 +66,22 @@ class DataPusher {  //<>//
   void toggle(String c) {
     switch (c) {
     case "1": 
-      changePreview(false);
+      submitPreview();
       break; 
     case "2": 
-      changePreview(true);
+      changePreview(false);
       break;
     case "3": 
-      submitPreview();
+      changeAnalysis(false);
       break;
     case "4": 
-      changeAnalysis(false);
+      submitAnalysis();
       break;
     case "5": 
       changeAnalysis(true);
       break;
     case "6": 
-      submitAnalysis();
+      changePreview(true);
       break;
     case "q": 
       showLeds = !showLeds;
