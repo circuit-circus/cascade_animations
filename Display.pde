@@ -4,7 +4,7 @@ abstract class Display {
    */
   int totalLeds = 0;
   int myID;
-  int virtualDensity = 5; //Default resolution
+  int virtualDensity = 4; //Default resolution
 
   ArrayList<Animation> myAnimations;
 
