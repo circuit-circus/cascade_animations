@@ -31,7 +31,7 @@ class CloudAnimation extends Animation {
       if (makeCloud) {
         c = color(150+map(cloudChance[i], 0, percentage, percentage, 25));
       } else {
-        c = color(50, 100+cloudChance[i]/2, 200+cloudChance[i]/2);
+        c = color(5, 20+cloudChance[i]/2, 100+cloudChance[i]/2);
       }
 
       int index = map[i];
