@@ -4,16 +4,15 @@ abstract class Display {
    */
   int totalLeds = 0;
   int myID;
-  int virtualDensity = 4; //Default resolution
+  //int virtualDensity = 4; //Default resolution
 
   ArrayList<Animation> myAnimations;
 
   SerialInterface mySerialInterface;
 
   Display() {
-  
   }
-  
+
   color[] getLedData() {
     color[] ledData = new color[1];
     return ledData;
@@ -24,30 +23,30 @@ abstract class Display {
   }
 
   color[] downsample(color[] inArray, int[] map, boolean isCircular) {
-    color[] outArray = new color[map.length / virtualDensity];
+    color[] outArray = new color[map.length];
     int j = 0;
     for (int i = 0; i < map.length; i++) {
-      if (1 == i % virtualDensity ) { //Make some more sophisticated downsampling code here
-        outArray[j] = inArray[map[i]];
-        j++;
-      }
+
+      outArray[j] = inArray[map[i]];
+      j++;
     }
     return outArray;
   }
-  
-  void addAnimation(){}
-   
-  void removeAnimation(int index){
-    if (index < myAnimations.size() && index >= 0){
-    myAnimations.remove(index);
+
+  void addAnimation() {
+  }
+
+  void removeAnimation(int index) {
+    if (index < myAnimations.size() && index >= 0) {
+      myAnimations.remove(index);
     }
   }
-  
-  void removeAnimations(){
+
+  void removeAnimations() {
     myAnimations.clear();
   }
-  
-  String getAnimationType(int index){
+
+  String getAnimationType(int index) {
     return myAnimations.get(index).getType();
   }
 }

@@ -18,8 +18,8 @@ class Circle extends Display {
     outerRadius = radius * 0.9;
     numInnerLeds = numInnerLeds_;
     numOuterLeds = numOuterLeds_;
-    numInnerPixels = numInnerLeds * virtualDensity;
-    numOuterPixels = numOuterLeds * virtualDensity;
+    numInnerPixels = numInnerLeds; 
+    numOuterPixels = numOuterLeds;
     allPixels = new color[numInnerPixels+numOuterPixels];
     innerLeds = new color[numInnerLeds];
     outerLeds = new color[numOuterLeds];
@@ -44,8 +44,8 @@ class Circle extends Display {
     outerRadius = radius * 0.9;
     numInnerLeds = numInnerLeds_;
     numOuterLeds = numOuterLeds_;
-    numInnerPixels = numInnerLeds * virtualDensity;
-    numOuterPixels = numOuterLeds * virtualDensity;
+    numInnerPixels = numInnerLeds;
+    numOuterPixels = numOuterLeds;
     allPixels = new color[numInnerPixels+numOuterPixels];
     innerLeds = new color[numInnerLeds];
     outerLeds = new color[numOuterLeds];
@@ -80,13 +80,13 @@ class Circle extends Display {
         ellipse(cos(vAngle) * outerRadius, sin(vAngle) * outerRadius, ledDiameter, ledDiameter);
       }
     }
-    if (showLeds) {   //<>//
-      stroke(0);    //<>//
-      //Drawing physical LEDs    //<>//
-      for (int i = 0; i < numOuterLeds; i++) {  //<>//
-        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4);   //<>//
-        fill(outerLeds[i]);  //<>//
-        ellipse(cos(pAngle) * outerRadius, sin(pAngle) * outerRadius, ledDiameter, ledDiameter);   //<>//
+    if (showLeds) {    //<>//
+      stroke(0);     //<>//
+      //Drawing physical LEDs     //<>//
+      for (int i = 0; i < numOuterLeds; i++) {   //<>//
+        float pAngle = (TWO_PI / numOuterLeds) * i  + (TWO_PI/4);    //<>//
+        fill(outerLeds[i]);   //<>//
+        ellipse(cos(pAngle) * outerRadius, sin(pAngle) * outerRadius, ledDiameter, ledDiameter);    //<>//
       }
       for (int i = 0; i < numInnerLeds; i++) {
         float pAngle = (TWO_PI / numInnerLeds) * i  + (TWO_PI/4);
@@ -115,14 +115,14 @@ class Circle extends Display {
 
   void addAnimation(String animationClassName, int location) { 
     Animation ani = animationCreator.create(animationClassName);    
-    if (ani == null) {    //<>//
+    if (ani == null) {     //<>//
       return;
-    }    //<>//
-    myAnimations.add(ani);    //<>//
+    }     //<>//
+    myAnimations.add(ani);     //<>//
     if (location == 0) {     //<>//
       ani.setPixels(allPixels, currentAreaMap[location], location);    //<>//
     } else if (location == 1) {    //<>//
-      ani.setPixels(allPixels, currentAreaMap[location], location);    //<>//
+      ani.setPixels(allPixels, currentAreaMap[location], location);     //<>//
     }
   }
 

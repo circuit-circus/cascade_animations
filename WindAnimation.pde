@@ -7,7 +7,7 @@ class WindAnimation extends Animation {
   CompoundCurve movement; 
   CompoundCurve brightness;
   int windStartIndex = 0;
-  float lengthMax = 114, lengthMin = lengthMax/3, windLength = lengthMin; //This can cause the program to hang if its longer than the pixelList size
+  float lengthMax = 20, lengthMin = lengthMax/3, windLength = lengthMin; //This can cause the program to hang if its longer than the pixelList size
   float movementBaseSpeed, minSpeed = 1, maxSpeed  = 7;
   //Hurricane entails windspeeds of approx. 33 m/s 
   float windSpeed, windStill = 0, windHurricane = 35;

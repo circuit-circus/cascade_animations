@@ -6,13 +6,13 @@ AnimationCreator animationCreator;
 WeatherInterface myWeatherInterface;
 WebMonitor myWebMonitor;
 
-boolean serialActive = true;                     // Use this to turn off the Serial when running this without a microcontroller connected.
+boolean serialActive = false;                     // Use this to turn off the Serial when running this without a microcontroller connected.
 boolean showLeds = false;                          // Shows Turning this off improves performance
 boolean showPixels = false;                       // Turning this off improves performance greatly
 
 void setup() {
   size(800, 800);
-  frameRate(60);
+  frameRate(25);
   try { // Try to establish connection to the Teensy
     mySerialInterface = new SerialInterface(this);
   } 
