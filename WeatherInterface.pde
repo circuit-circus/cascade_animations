@@ -130,7 +130,7 @@ class WeatherInterface {
   }
   
   float getLatestWind() {
-    float wind = int(latestWindGust);
+    float wind = int(latestWindSpeed);
     return wind;
   }
 }
