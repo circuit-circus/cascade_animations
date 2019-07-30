@@ -6,12 +6,14 @@ class DataPusher {  //<>//
   Circle preview;
   Circle analysis;
   Circle result;
-  int sensorThreshold = 120;
+  int sensorThreshold = 20;
   int numSensors = 6;
   boolean sensorsReady[] = new boolean[numSensors];
   int previewIndex = 0;
   int analysisIndex = 0;
   int resultLastPosition = 0;
+  
+  int oldData[] = {0, 0, 0, 0, 0, 0};
 
   ArrayList<String> allAnimations;
 
@@ -48,13 +50,14 @@ class DataPusher {  //<>//
     int[] data = mySerialInterface.getSensorData(); 
     //println(data);
     for (int i = 0; i < data.length; i++) {
-      if (data[i] > sensorThreshold && sensorsReady[i]) {
+      if (oldData[i] - data[i] > sensorThreshold && sensorsReady[i]) {
         sensorsReady[i] = false;
         toggle(str(i+1));
-      } else if (data[i] <= sensorThreshold) {
+      } else if (oldData[i] - data[i] <= sensorThreshold) {
         sensorsReady[i] = true;
       }
     }
+    oldData = data;
     //println(sensorsReady[1]);
   }
 
