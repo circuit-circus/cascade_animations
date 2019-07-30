@@ -13,12 +13,12 @@ class WeatherInterface {
   Calendar lastUpdatedTime;
   String tomorrowsTime;
 
-  String latestTemperature = ""; // in celcius
-  String latestWindSpeed = ""; // in mps
-  String latestWindGust = ""; // in mps
-  String latestCloudiness = ""; // in percentage
-  String latestFog = ""; // in percentage
-  String latestPrecipitation = ""; // in mm
+  String latestTemperature = "25"; // in celcius
+  String latestWindSpeed = "4.1"; // in mps
+  String latestWindGust = "6.0"; // in mps
+  String latestCloudiness = "50"; // in percentage
+  String latestFog = "0"; // in percentage
+  String latestPrecipitation = "2.2"; // in mm
 
 
   WeatherInterface() {
@@ -81,12 +81,12 @@ class WeatherInterface {
     
               dataPoint = dataPoint.getChild("location");
               if(dataPoint != null) {
-                latestTemperature = ( (dataPoint.getChild("temperature") != null && dataPoint.getChild("temperature").getString("value") != null) && latestTemperature.length() == 0 ) ? dataPoint.getChild("temperature").getString("value") : latestTemperature;
-                latestWindSpeed = ( (dataPoint.getChild("windSpeed") != null && dataPoint.getChild("windSpeed").getString("mps") != null) && latestWindSpeed.length() == 0 ) ? dataPoint.getChild("windSpeed").getString("mps") : latestWindSpeed;
-                latestWindGust = ( (dataPoint.getChild("windGust") != null && dataPoint.getChild("windGust").getString("mps") != null) && latestWindGust.length() == 0 ) ? dataPoint.getChild("windGust").getString("mps") : latestWindGust;
-                latestCloudiness = ( (dataPoint.getChild("cloudiness") != null && dataPoint.getChild("cloudiness").getString("percent") != null) && latestCloudiness.length() == 0 ) ? dataPoint.getChild("cloudiness").getString("percent") : latestCloudiness;
-                latestFog = ( (dataPoint.getChild("fog") != null && dataPoint.getChild("fog").getString("percent") != null) && latestFog.length() == 0 ) ? dataPoint.getChild("fog").getString("percent") : latestFog;
-                latestPrecipitation = ( (dataPoint.getChild("precipitation") != null && dataPoint.getChild("precipitation").getString("value") != null) && latestPrecipitation.length() == 0 ) ? dataPoint.getChild("precipitation").getString("value") : latestPrecipitation;
+                latestTemperature = ( (dataPoint.getChild("temperature") != null && dataPoint.getChild("temperature").getString("value") != null) ) ? dataPoint.getChild("temperature").getString("value") : latestTemperature;
+                latestWindSpeed = ( (dataPoint.getChild("windSpeed") != null && dataPoint.getChild("windSpeed").getString("mps") != null) ) ? dataPoint.getChild("windSpeed").getString("mps") : latestWindSpeed;
+                latestWindGust = ( (dataPoint.getChild("windGust") != null && dataPoint.getChild("windGust").getString("mps") != null)) ? dataPoint.getChild("windGust").getString("mps") : latestWindGust;
+                latestCloudiness = ( (dataPoint.getChild("cloudiness") != null && dataPoint.getChild("cloudiness").getString("percent") != null) ) ? dataPoint.getChild("cloudiness").getString("percent") : latestCloudiness;
+                latestFog = ( (dataPoint.getChild("fog") != null && dataPoint.getChild("fog").getString("percent") != null) ) ? dataPoint.getChild("fog").getString("percent") : latestFog;
+                latestPrecipitation = ( (dataPoint.getChild("precipitation") != null && dataPoint.getChild("precipitation").getString("value") != null) ) ? dataPoint.getChild("precipitation").getString("value") : latestPrecipitation;
               }
             }
           }
