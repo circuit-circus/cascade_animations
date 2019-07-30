@@ -14,6 +14,7 @@ class DataPusher {  //<>//
   int resultLastPosition = 0;
   
   int oldData[] = {0, 0, 0, 0, 0, 0};
+  int dataAvg = 0;
 
   ArrayList<String> allAnimations;
 
@@ -48,16 +49,24 @@ class DataPusher {  //<>//
 
   void readStates() {
     int[] data = mySerialInterface.getSensorData(); 
+    
+    dataAvg = 0;
+    for(int i = 0; i < data.length; i++){
+      dataAvg += data[i];
+    }
+    dataAvg = dataAvg / data.length;
+    
     //println(data);
     for (int i = 0; i < data.length; i++) {
-      if (oldData[i] - data[i] > sensorThreshold && sensorsReady[i]) {
+      if (data[i] - dataAvg > sensorThreshold && sensorsReady[i]) {
         sensorsReady[i] = false;
         toggle(str(i+1));
-      } else if (oldData[i] - data[i] <= sensorThreshold) {
+      } else if (data[i] - dataAvg <= sensorThreshold) {
         sensorsReady[i] = true;
       }
     }
     oldData = data;
+
     //println(sensorsReady[1]);
   }
 
