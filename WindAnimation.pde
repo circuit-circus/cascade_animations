@@ -43,7 +43,7 @@ class WindAnimation extends Animation {
         i = i - map.length;
       }
 
-      int indexToWrite =  round(windStartIndex - i);
+      int indexToWrite =  floor(windStartIndex - i);
       if (indexToWrite < 0) { 
         indexToWrite += map.length;
       } else if (indexToWrite >= map.length) {

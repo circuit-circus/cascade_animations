@@ -6,7 +6,7 @@ class DataPusher {  //<>//
   Circle preview;
   Circle analysis;
   Circle result;
-  int sensorThreshold = 20;
+  int sensorThreshold = 50;
   int numSensors = 6;
   boolean sensorsReady[] = new boolean[numSensors];
   int previewIndex = 0;
