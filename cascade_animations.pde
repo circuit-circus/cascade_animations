@@ -11,8 +11,8 @@ boolean showLeds = false;                          // Shows Turning this off imp
 boolean showPixels = false;                       // Turning this off improves performance greatly
 
 void setup() {
-  size(800, 800);
-  frameRate(60);
+  size(180, 100, JAVA2D);
+  frameRate(35);
   try { // Try to establish connection to the Teensy
     mySerialInterface = new SerialInterface(this);
   } 
